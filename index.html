@@ -33,9 +33,9 @@
   --ink:#0B0718;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:auto}
-html.lenis,html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
+/* the "movie then pause" model: native scroll, firm snap to each scene */
+html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   background:var(--navy-deep);
   color:var(--cream);
@@ -76,6 +76,44 @@ button{font:inherit;cursor:pointer}
   transition:background .2s,color .2s;
 }
 .site-nav a:hover{background:var(--pink);color:#fff}
+/* section dots — the map of the movie; click to jump to any scene */
+.section-dots{
+  position:fixed;right:clamp(10px,1.6vw,22px);top:50%;transform:translateY(-50%);
+  z-index:120;display:flex;flex-direction:column;gap:12px;
+}
+.section-dots button{
+  width:12px;height:12px;border-radius:50%;padding:0;
+  border:2px solid rgba(255,255,255,.55);background:transparent;cursor:pointer;
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.section-dots button:hover{border-color:var(--pink)}
+.section-dots button.active{background:var(--pink);border-color:var(--pink);transform:scale(1.3);box-shadow:0 0 10px rgba(255,46,154,.7)}
+@media(max-width:860px){.section-dots{right:7px;gap:10px}.section-dots button{width:10px;height:10px}}
+
+/* mobile hamburger + full-screen menu */
+.nav-toggle{
+  display:none;width:46px;height:46px;border-radius:12px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(6,11,46,.6);backdrop-filter:blur(8px);color:#fff;
+  align-items:center;justify-content:center;flex-direction:column;gap:5px;
+}
+.nav-toggle span{display:block;width:20px;height:2.5px;border-radius:2px;background:currentColor;transition:transform .25s,opacity .25s}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed;inset:0;z-index:140;background:rgba(4,6,28,.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a.menu-link{
+  font-family:'Titan One',cursive;font-size:clamp(1.8rem,8vw,2.6rem);color:#fff;
+  text-decoration:none;padding:10px 24px;transition:color .2s;
+}
+.mobile-menu a.menu-link:hover{color:var(--pink)}
+.mobile-menu .socials{margin-top:26px}
+@media(max-width:860px){.nav-toggle{display:flex}}
+
 .chapter-readout{
   position:fixed;left:clamp(16px,4vw,40px);bottom:18px;z-index:100;
   font-size:.7rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
@@ -87,7 +125,7 @@ button{font:inherit;cursor:pointer}
 
 /* ============ HERO — THE GALAXY ============ */
 .hero{
-  position:relative;min-height:100vh;
+  position:relative;min-height:100svh;scroll-snap-align:start;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;overflow:hidden;
   background:
@@ -169,10 +207,10 @@ button{font:inherit;cursor:pointer}
 .marquee-track .dot{color:var(--navy-deep)}
 
 /* ============ CHAPTERS (pinned scenes) ============ */
-.chapter{position:relative;overflow:hidden}
+.chapter{position:relative;overflow:hidden;scroll-snap-align:start}
 .chapter .stage{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;
-  padding:100px 20px;
+  min-height:100svh;display:flex;align-items:center;justify-content:center;position:relative;
+  padding:90px 20px 44px;
 }
 .chapter-bg{position:absolute;inset:0;z-index:0}
 .big-num{
@@ -260,11 +298,13 @@ button{font:inherit;cursor:pointer}
 #ch3 .chapter-copy p.desc{margin:0 auto}
 
 /* ============ SCHEDULE — horizontal run ============ */
-.route{position:relative;background:
+.route{position:relative;scroll-snap-align:start;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  background:
   radial-gradient(1000px 700px at 80% 0%,rgba(255,46,154,.12),transparent 55%),
   radial-gradient(900px 700px at 10% 100%,rgba(41,216,255,.1),transparent 55%),
   var(--navy)}
-.route-head{padding:110px 20px 10px;text-align:center;position:relative;z-index:2}
+.route-head{padding:90px 20px 0;text-align:center;position:relative;z-index:2}
 .route-head .kicker{color:var(--pink);font-weight:900;letter-spacing:.26em;text-transform:uppercase;font-size:.78rem}
 .route-head h2{font-size:clamp(2.4rem,6vw,4.6rem);text-transform:uppercase;margin-top:10px}
 .route-head h2 em{font-style:normal;color:var(--cyan)}
@@ -274,41 +314,53 @@ button{font:inherit;cursor:pointer}
   padding:12px 18px;font-size:.95rem;
 }
 .route-head .note strong{color:var(--pink-soft)}
-.route-stage{position:relative;overflow:hidden}
-.route-track{
-  display:flex;gap:clamp(18px,3vw,34px);width:max-content;
-  padding:60px clamp(20px,6vw,80px) 120px;align-items:stretch;will-change:transform;
+.route-stage{position:relative}
+/* the whole week, visible at once — no swiping, no arrows, nothing to get stuck on */
+.route-grid{
+  position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(12px,1.8vw,20px);max-width:1150px;margin:0 auto;
+  padding:34px clamp(18px,4vw,40px) 60px;
 }
 .stop-card{
-  position:relative;width:clamp(240px,26vw,320px);flex:none;
+  position:relative;
   background:rgba(255,255,255,.05);
   border:2px solid rgba(255,255,255,.16);
-  border-radius:22px;padding:26px 24px 24px;
+  border-radius:20px;padding:20px 20px 18px;
   backdrop-filter:blur(4px);
   transition:border-color .25s, transform .25s;
 }
-.stop-card:hover{border-color:var(--pink);transform:translateY(-6px)}
+.stop-card:hover{border-color:var(--pink);transform:translateY(-4px)}
 .stop-card .day{
-  font-family:'Titan One',cursive;font-size:.95rem;letter-spacing:.14em;color:var(--cyan);
-  text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;
+  font-family:'Titan One',cursive;font-size:.85rem;letter-spacing:.12em;color:var(--cyan);
+  text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:9px;
 }
-.stop-card .day::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--pink);flex:none}
-.stop-card h3{font-size:1.45rem;margin-bottom:8px}
-.stop-card .where{font-weight:800;color:var(--pink-soft);font-size:.95rem;margin-bottom:6px}
-.stop-card .when{font-weight:700;color:rgba(255,248,238,.75);font-size:.9rem}
+.stop-card .day::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--pink);box-shadow:0 0 12px var(--pink);flex:none}
+.stop-card h3{font-size:1.2rem;margin-bottom:6px}
+.stop-card .where{font-weight:800;color:var(--pink-soft);font-size:.9rem;margin-bottom:4px}
+.stop-card .when{font-weight:700;color:rgba(255,248,238,.75);font-size:.85rem}
 .stop-card.is-cta{background:linear-gradient(145deg,rgba(255,46,154,.25),rgba(41,216,255,.15));border-style:dashed}
 .stop-card.is-cta h3{color:#fff}
+.stop-card.is-cta .btn{min-height:44px;padding:10px 20px;font-size:.9rem;margin-top:4px}
 .route-line{
-  position:absolute;left:0;right:0;bottom:86px;height:4px;z-index:0;
+  position:absolute;left:0;right:0;top:52%;height:4px;z-index:0;
   background:repeating-linear-gradient(90deg,var(--cyan) 0 18px,transparent 18px 34px);
-  opacity:.35;
+  opacity:.25;pointer-events:none;
+}
+@media(max-width:900px){.route-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){
+  .route-grid{grid-template-columns:1fr;gap:10px;padding-bottom:50px}
+  .stop-card{padding:14px 16px 13px}
+  .stop-card .day{margin-bottom:5px}
+  .stop-card h3{font-size:1.05rem;margin-bottom:3px}
 }
 
 /* ============ ALERTS ============ */
-.alerts{position:relative;background:
+.alerts{position:relative;scroll-snap-align:start;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  background:
   radial-gradient(900px 600px at 50% -10%,rgba(41,216,255,.14),transparent 60%),var(--navy-deep);
-  padding:110px 20px;text-align:center;overflow:hidden}
-.alerts .phone-wrap{max-width:820px;margin:0 auto}
+  padding:90px 20px;text-align:center;overflow:hidden}
+.alerts .phone-wrap{max-width:820px;margin:0 auto;width:100%}
 .alerts h2{font-size:clamp(2.2rem,5.5vw,4rem);text-transform:uppercase}
 .alerts h2 em{font-style:normal;color:var(--pink)}
 .alerts p.lead{max-width:56ch;margin:18px auto 0;font-weight:700;font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,248,238,.88)}
@@ -324,12 +376,14 @@ button{font:inherit;cursor:pointer}
 .alerts .fine{margin-top:26px;font-size:.85rem;color:rgba(255,248,238,.55);font-weight:600}
 
 /* ============ BOOK ============ */
-.book{position:relative;background:
+.book{position:relative;scroll-snap-align:start;min-height:100svh;
+  display:flex;align-items:center;justify-content:center;
+  background:
   radial-gradient(1100px 700px at 20% 20%,rgba(255,46,154,.16),transparent 55%),
   radial-gradient(900px 700px at 90% 80%,rgba(155,197,61,.12),transparent 60%),
   var(--navy);
-  padding:120px 20px 100px}
-.book-inner{max-width:1150px;margin:0 auto;text-align:center}
+  padding:100px 20px 70px}
+.book-inner{max-width:1150px;margin:0 auto;text-align:center;width:100%}
 .book h2{font-size:clamp(2.4rem,6vw,4.6rem);text-transform:uppercase}
 .book h2 em{font-style:normal;color:var(--pistachio)}
 .book .lead{max-width:60ch;margin:18px auto 0;font-weight:700;color:rgba(255,248,238,.88);font-size:clamp(1rem,2vw,1.2rem)}
@@ -356,7 +410,7 @@ button{font:inherit;cursor:pointer}
 @keyframes heartbeat{0%,100%{transform:scale(1)}12%{transform:scale(1.25)}24%{transform:scale(1)}}
 
 /* ============ FOOTER ============ */
-.site-footer{background:#04061C;padding:56px 20px 40px;border-top:1px solid rgba(255,255,255,.08)}
+.site-footer{background:#04061C;padding:56px 20px 40px;border-top:1px solid rgba(255,255,255,.08);scroll-snap-align:end}
 .footer-inner{max-width:1150px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center}
 .socials{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .social-pill{
@@ -408,7 +462,29 @@ button{font:inherit;cursor:pointer}
     <a href="#alerts">Text Alerts</a>
     <a href="#book">Book Me</a>
   </nav>
+  <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a class="menu-link" href="#menu">Menu</a>
+  <a class="menu-link" href="#find-me">Find Me</a>
+  <a class="menu-link" href="#alerts">Text Alerts</a>
+  <a class="menu-link" href="#book">Book Me</a>
+  <div class="socials">
+    <a class="social-pill" href="https://www.tiktok.com/@theoreolady863" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
+      @theoreolady863
+    </a>
+    <a class="social-pill" href="https://www.facebook.com/theoreolady863" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Tiffany Ponds
+    </a>
+  </div>
+</div>
+
+<nav class="section-dots" id="section-dots" aria-label="Page sections"></nav>
 
 <div class="chapter-readout" aria-hidden="true">
   <span id="chapter-label">Chapter 0 — The Galaxy</span>
@@ -531,11 +607,11 @@ button{font:inherit;cursor:pointer}
   <div class="route-head">
     <p class="kicker">The mobile part of the mobile dessert lady</p>
     <h2 id="route-h">Where's the <em>Oreo Lady</em> this week?</h2>
-    <p class="note"><strong>The live schedule drops every week</strong> on TikTok &amp; Facebook — here's the kind of week she runs. Scroll sideways through the route &#8594;</p>
+    <p class="note"><strong>The live schedule drops every week</strong> on TikTok &amp; Facebook — here's the kind of week she runs.</p>
   </div>
   <div class="route-stage" id="route-stage">
     <div class="route-line" aria-hidden="true"></div>
-    <div class="route-track" id="route-track">
+    <div class="route-grid" id="route-grid">
       <article class="stop-card">
         <p class="day">Weekday pop-up</p>
         <h3>Business &amp; office runs</h3>
@@ -570,7 +646,7 @@ button{font:inherit;cursor:pointer}
         <p class="day">Your spot next?</p>
         <h3>Put your event on the route</h3>
         <p class="where">Businesses, schools, churches, events</p>
-        <p class="when" style="margin-bottom:18px">She'll bring the fryer.</p>
+        <p class="when" style="margin-bottom:14px">She'll bring the fryer.</p>
         <a class="btn btn-pink" href="#book">Book the Oreo Lady</a>
       </article>
     </div>
@@ -656,7 +732,6 @@ button{font:inherit;cursor:pointer}
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis.min.js"></script>
 <script>
 (function(){
 "use strict";
@@ -666,14 +741,9 @@ if (JUMP !== null) history.scrollRestoration = "manual";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ---------- smooth scroll (skipped for jump-verification & reduced motion) ---------- */
-var lenis = null;
-if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
-  lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
-  gsap.ticker.lagSmoothing(0);
-}
+/* Native scrolling + CSS scroll-snap does the "pause on each scene" work;
+   ?jump verification must not animate to the position */
+if (JUMP !== null) document.documentElement.style.scrollBehavior = "auto";
 
 /* ---------- hero title char split ---------- */
 (function(){
@@ -706,7 +776,9 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
    ambient/parallax triggers after.
    ============================================================ */
 
-/* ---------- CH1: the classic — oreo becomes fried, powder storm ---------- */
+/* ---------- Chapters: the page SNAPS to each scene (CSS scroll-snap),
+   then the scene plays itself like a movie beat — same on every device.
+   No pinning, no scrubbing, scroll always moves the page 1:1. ---------- */
 (function(){
   var burst = document.getElementById("powder-burst");
   for (var i = 0; i < 26; i++){
@@ -722,78 +794,43 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
     gsap.set("#powder-burst i", {opacity: .9});
     return;
   }
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch1", start: "top top", end: "+=140%", pin: true, scrub: true }
-  });
-  tl.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
-                         {yPercent:0, rotation:20, ease:"power2.in", duration:0.3})
-    .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.12}, ">-0.02")
-    .fromTo("#frame1", {scale:0.4, opacity:0, rotation:8},
-            {scale:1, opacity:1, rotation:-2, ease:"back.out(1.8)", duration:0.28}, "<")
-    .fromTo("#powder-burst i",
-            {y:-90, opacity:0},
-            {y:40, opacity:0.95, stagger:{each:0.008, from:"random"}, ease:"power1.in", duration:0.3}, ">-0.1")
-    .fromTo("#ch1 .chapter-copy > *", {opacity:0, y:44},
-            {opacity:1, y:0, stagger:0.05, duration:0.3, ease:"power3.out"}, 0.18)
-    .to("#ch1 .big-num", {xPercent:-18, duration:1}, 0);
+
+  var tl1 = gsap.timeline({ scrollTrigger: { trigger: "#ch1", start: "top 55%" } });
+  tl1.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
+             {yPercent:0, rotation:20, ease:"power2.in", duration:0.5})
+    .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.18}, ">-0.05")
+    .fromTo("#frame1", {scale:0.6, opacity:0, rotation:8},
+            {scale:1, opacity:1, rotation:-2, ease:"back.out(1.7)", duration:0.6}, "<")
+    .fromTo("#powder-burst i", {y:-90, opacity:0},
+            {y:40, opacity:0.95, stagger:{each:0.012, from:"random"}, ease:"power1.in", duration:0.7}, ">-0.3")
+    .fromTo("#ch1 .chapter-copy > *", {opacity:0, y:34},
+            {opacity:1, y:0, stagger:0.08, duration:0.5, ease:"power3.out"}, "<");
+
+  var tl2 = gsap.timeline({ scrollTrigger: { trigger: "#ch2", start: "top 55%" } });
+  tl2.fromTo("#frame2", {yPercent:20, scale:0.6, opacity:0, rotation:-8},
+             {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.6})
+    .fromTo("#ch2 .pist-bit", {scale:0, y:-40},
+            {scale:1, y:0, stagger:0.06, ease:"back.out(3)", duration:0.4}, ">-0.25")
+    .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:34},
+            {opacity:1, y:0, stagger:0.08, duration:0.5, ease:"power3.out"}, "<");
+
+  var tl3 = gsap.timeline({ scrollTrigger: { trigger: "#ch3", start: "top 55%" } });
+  tl3.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.5})
+    .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.5}, "<")
+    .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.35}, ">-0.15")
+    .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:34},
+            {opacity:1, y:0, stagger:0.07, duration:0.45, ease:"power3.out"}, ">-0.1")
+    .fromTo("#frame3", {scale:0.6, rotation:-10, opacity:0},
+            {scale:1, rotation:-2, opacity:1, ease:"back.out(1.7)", duration:0.5}, "<+0.1");
 })();
 
-/* ---------- CH2: dubai — the platter slides up under a pistachio rain ---------- */
+/* ---------- SCHEDULE: the whole week visible at once — cards pop in
+   like stops lighting up on a map when the section snaps into view ---------- */
 (function(){
   if (prefersReduced) return;
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch2", start: "top top", end: "+=140%", pin: true, scrub: true }
-  });
-  tl.fromTo("#frame2", {yPercent:60, scale:0.5, opacity:0, rotation:-8},
-            {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.35})
-    .fromTo("#ch2 .pist-bit", {scale:0, rotation:-90, y:-60},
-            {scale:1, rotation:20, y:0, stagger:0.05, ease:"back.out(3)", duration:0.25}, ">-0.15")
-    .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:44},
-            {opacity:1, y:0, stagger:0.05, duration:0.3, ease:"power3.out"}, 0.15)
-    .to("#ch2 .big-num", {xPercent:18, duration:1}, 0);
-})();
-
-/* ---------- CH3: the split ---------- */
-(function(){
-  if (prefersReduced) return;
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch3", start: "top top", end: "+=120%", pin: true, scrub: true }
-  });
-  tl.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.35})
-    .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.35}, "<")
-    .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.25}, ">-0.1")
-    .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:50},
-            {opacity:1, y:0, stagger:0.06, duration:0.32, ease:"power3.out"}, ">-0.1")
-    .fromTo("#frame3", {scale:0.5, rotation:-10, opacity:0},
-            {scale:1, rotation:-2, opacity:1, ease:"back.out(1.8)", duration:0.3}, "<+0.05")
-    .to("#ch3 .big-num", {yPercent:-14, duration:1}, 0);
-})();
-
-/* ---------- SCHEDULE: horizontal pinned run ---------- */
-(function(){
-  var track = document.getElementById("route-track");
-  var stage = document.getElementById("route-stage");
-  if (prefersReduced){
-    stage.style.overflowX = "auto";
-    return;
-  }
-  var horiz = gsap.to(track, {
-    x: function(){ return -(track.scrollWidth - window.innerWidth); },
-    ease: "none",
-    scrollTrigger: {
-      trigger: stage, start: "top top", pin: true, scrub: true,
-      end: function(){ return "+=" + (track.scrollWidth - window.innerWidth); },
-      invalidateOnRefresh: true
-    }
-  });
-  gsap.utils.toArray(".stop-card").forEach(function(card, i){
-    gsap.from(card, {
-      y: 60, opacity: 0, ease: "power2.out",
-      scrollTrigger: {
-        trigger: card, containerAnimation: horiz,
-        start: "left 95%", end: "left 65%", scrub: true
-      }
-    });
+  gsap.from(".stop-card", {
+    y: 50, opacity: 0, scale: 0.92, stagger: 0.1, duration: 0.6, ease: "back.out(1.5)",
+    scrollTrigger: { trigger: "#route-grid", start: "top 80%" }
   });
 })();
 
@@ -917,10 +954,27 @@ if (!prefersReduced){
     { sel: "#alerts", name: "Chapter 5 — The Drop" },
     { sel: "#book",   name: "Chapter 6 — The Counter" }
   ];
-  chapters.forEach(function(c){
+  /* section dots — one per scene, click to jump */
+  var dotsWrap = document.getElementById("section-dots");
+  var dots = chapters.map(function(c){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", c.name);
+    b.addEventListener("click", function(){
+      var el = document.querySelector(c.sel);
+      if (el) el.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
+    });
+    dotsWrap.appendChild(b);
+    return b;
+  });
+  function activate(idx){
+    label.textContent = chapters[idx].name;
+    dots.forEach(function(d, i){ d.classList.toggle("active", i === idx); });
+  }
+  chapters.forEach(function(c, idx){
     ScrollTrigger.create({
       trigger: c.sel, start: "top 55%", end: "bottom 55%",
-      onToggle: function(self){ if (self.isActive) label.textContent = c.name; }
+      onToggle: function(self){ if (self.isActive) activate(idx); }
     });
   });
   /* used by settle() so a ?jump landing shows the right chapter */
@@ -929,11 +983,12 @@ if (!prefersReduced){
     for (var i = chapters.length - 1; i >= 0; i--){
       var el = document.querySelector(chapters[i].sel);
       if (el && el.getBoundingClientRect().top <= mid){
-        label.textContent = chapters[i].name; return;
+        activate(i); return;
       }
     }
-    label.textContent = chapters[0].name;
+    activate(0);
   };
+  activate(0);
   ScrollTrigger.create({
     onUpdate: function(){
       var max = document.documentElement.scrollHeight - window.innerHeight;
@@ -942,18 +997,26 @@ if (!prefersReduced){
   });
 })();
 
-/* ---------- nav smooth anchors through lenis ---------- */
-document.querySelectorAll('a[href^="#"]').forEach(function(a){
-  a.addEventListener("click", function(e){
-    var id = a.getAttribute("href");
-    if (id.length < 2) return;
-    var el = document.querySelector(id);
-    if (!el) return;
-    e.preventDefault();
-    if (lenis) lenis.scrollTo(el, { offset: 0 });
-    else el.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
+/* ---------- mobile menu (anchors themselves use native CSS smooth scroll) ---------- */
+(function(){
+  var toggle = document.getElementById("nav-toggle");
+  var menu = document.getElementById("mobile-menu");
+  function setOpen(open){
+    toggle.setAttribute("aria-expanded", open);
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    menu.setAttribute("aria-hidden", !open);
+    menu.classList.toggle("open", open);
+  }
+  toggle.addEventListener("click", function(){
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
   });
-});
+  menu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){ setOpen(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") setOpen(false);
+  });
+})();
 
 /* ---------- dev contract: ?jump + __ready + jank meter ---------- */
 var deltas = [], last = performance.now();
@@ -976,7 +1039,7 @@ function settle(){
     ScrollTrigger.update();
     /* force-settle every scrubbed animation at the jumped position */
     ScrollTrigger.getAll().forEach(function(st){
-      if (st.animation){ st.animation.totalProgress(st.progress); }
+      if (st.animation){ st.animation.totalProgress(st.progress > 0 ? 1 : 0); }
     });
     if (window.__syncChapterLabel) window.__syncChapterLabel();
   }

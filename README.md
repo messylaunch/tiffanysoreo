@@ -7,9 +7,12 @@ Oreos, Lakeland / the 863), plus the internal GoHighLevel sales playbook.
 
 | File | What it is |
 |---|---|
-| `index.html` | The customer-facing site — a scroll-film: galaxy hero → 3 menu chapters → horizontal schedule route → text-alert + booking CTAs |
+| `index.html` | The customer-facing site — a scroll-film: galaxy hero → 3 menu chapters → schedule carousel → text-alert + booking CTAs |
 | `ghl-sales-worksheet.html` | **Internal** — discovery worksheet + pitch script for selling Tiffany on GoHighLevel (printable) |
+| `assets/` | Generated brand imagery (hero, menu photos, mascot) |
 | `vendor/` | GSAP, ScrollTrigger, Lenis (vendored locally, no CDN dependency) |
+
+> The Davis Lawn Service site lives in its own repo: [messylaunch/dlslawn](https://github.com/messylaunch/dlslawn)
 
 ## Menu (from the flyer)
 
