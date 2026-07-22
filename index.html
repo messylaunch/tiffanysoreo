@@ -66,6 +66,7 @@ button{font:inherit;cursor:pointer}
 .site-header>*{pointer-events:auto}
 .logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-lockup svg{width:40px;height:40px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+.logo-lockup .logo-badge{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 0 0 2px var(--pink),0 2px 8px rgba(0,0,0,.5);transform:scale(1)}
 .logo-lockup .logo-word{font-family:'Titan One',cursive;font-size:1.05rem;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .logo-lockup .logo-word em{font-style:normal;color:var(--pink)}
 .site-nav{display:flex;gap:6px;background:rgba(6,11,46,.55);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px}
@@ -95,7 +96,11 @@ button{font:inherit;cursor:pointer}
     radial-gradient(1000px 800px at 85% 20%,rgba(27,42,143,.5),transparent 60%),
     var(--navy-deep);
 }
-#starfield{position:absolute;inset:0;width:100%;height:100%}
+.hero-photo{position:absolute;inset:0;background:url(assets/hero-galaxy.jpg) center 40%/cover no-repeat}
+.hero-photo::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 55% at 50% 46%,rgba(6,11,46,.62),rgba(6,11,46,.28) 60%,rgba(6,11,46,.08)),
+  linear-gradient(rgba(6,11,46,.55),transparent 22%,transparent 72%,rgba(6,11,46,.45))}
+#starfield{position:absolute;inset:0;width:100%;height:100%;opacity:.75}
 .hero-oreo{position:absolute;will-change:transform;filter:drop-shadow(0 10px 24px rgba(0,0,0,.55));pointer-events:none}
 .hero-inner{position:relative;z-index:3;padding:0 20px}
 .hero-eyebrow{
@@ -108,9 +113,20 @@ button{font:inherit;cursor:pointer}
 }
 .hero-title .line{display:block;overflow:hidden;padding:.06em .1em}
 .hero-title .ch{display:inline-block;will-change:transform}
-.hero-title .w-the{font-size:.32em;display:block;color:var(--cream);letter-spacing:.4em;margin-bottom:.2em;text-shadow:0 3px 0 rgba(0,0,0,.35)}
-.hero-title .w-oreo .ch{color:#fff;-webkit-text-stroke:0;text-shadow:0 6px 0 var(--navy-glow),0 12px 30px rgba(0,0,0,.5)}
-.hero-title .w-lady .ch{color:var(--pink);text-shadow:0 6px 0 #7A0C48,0 12px 30px rgba(0,0,0,.5)}
+.hero-title .w-the{font-size:.30em;display:block;color:#fff;letter-spacing:.4em;margin-bottom:.2em;
+  text-shadow:-.06em -.06em 0 #C1121F,.06em -.06em 0 #C1121F,-.06em .06em 0 #C1121F,.06em .06em 0 #C1121F,.09em 0 0 #C1121F,-.09em 0 0 #C1121F,0 .09em 0 #C1121F,0 -.09em 0 #C1121F,0 .22em .1em rgba(0,0,0,.45)}
+/* flyer-style sticker lettering: white fill + cyan outline, pink fill + white outline */
+.hero-title .w-oreo .ch{color:#fff;
+  text-shadow:-.045em -.045em 0 var(--cyan),.045em -.045em 0 var(--cyan),-.045em .045em 0 var(--cyan),.045em .045em 0 var(--cyan),.065em 0 0 var(--cyan),-.065em 0 0 var(--cyan),0 .065em 0 var(--cyan),0 -.065em 0 var(--cyan),0 .12em 0 var(--navy-glow),0 .2em .3em rgba(0,0,0,.55)}
+.hero-title .w-lady .ch{color:var(--pink);
+  text-shadow:-.045em -.045em 0 #fff,.045em -.045em 0 #fff,-.045em .045em 0 #fff,.045em .045em 0 #fff,.065em 0 0 #fff,-.065em 0 0 #fff,0 .065em 0 #fff,0 -.065em 0 #fff,0 .12em 0 #7A0C48,0 .2em .3em rgba(0,0,0,.55)}
+.hero-mascot{
+  position:absolute;z-index:3;top:12%;left:6%;width:clamp(90px,11vw,150px);aspect-ratio:1;
+  border-radius:50%;overflow:hidden;border:4px solid #fff;
+  box-shadow:0 0 0 4px var(--pink),0 14px 34px rgba(0,0,0,.55);
+  transform:rotate(-6deg);will-change:transform;
+}
+.hero-mascot img{width:100%;height:100%;object-fit:cover;transform:scale(1.28)}
 .hero-tag{
   margin-top:22px;font-size:clamp(1.05rem,2.6vw,1.5rem);font-weight:700;color:var(--cream);
   opacity:.95;
@@ -183,48 +199,35 @@ button{font:inherit;cursor:pointer}
   background:#fff;color:var(--ink);border-radius:18px;padding:14px 26px;
   transform:rotate(-2deg);box-shadow:0 10px 0 rgba(0,0,0,.25);
 }
-.price-tag .qty{font-family:'Titan One',cursive;font-size:clamp(1.4rem,3vw,2rem)}
+.price-tag .qty{font-family:'Titan One',cursive;font-size:clamp(1.4rem,3vw,2rem);color:var(--pink)}
 .price-tag .for{font-weight:900;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;color:#666}
 .price-tag .usd{font-family:'Titan One',cursive;font-size:clamp(2rem,4.5vw,3rem);color:var(--pink)}
 .chapter-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:340px}
-.plate{position:relative;width:clamp(260px,34vw,440px);aspect-ratio:1;will-change:transform}
 
-/* CSS-drawn fried oreo */
-.fried{
-  position:absolute;border-radius:46% 54% 52% 48%/52% 47% 53% 48%;
-  background:
-    radial-gradient(circle at 32% 28%,#F5C878 0%,var(--gold) 42%,var(--gold-deep) 100%);
-  box-shadow:inset -8px -12px 24px rgba(90,50,10,.45),0 16px 34px rgba(0,0,0,.5);
+/* flyer-style photo card: white ring + colored ring, slight tilt */
+.photo-frame{
+  position:relative;width:clamp(280px,36vw,460px);aspect-ratio:1;
+  border-radius:34px;overflow:hidden;border:4px solid #fff;
+  box-shadow:0 0 0 5px var(--pink),0 22px 50px rgba(0,0,0,.55);
+  transform:rotate(-2deg);will-change:transform;background:var(--navy-deep);
 }
-.fried::after{ /* powdered sugar speckle */
-  content:"";position:absolute;inset:0;border-radius:inherit;
-  background-image:
-    radial-gradient(circle,rgba(255,255,255,.95) 0 1.6px,transparent 2px),
-    radial-gradient(circle,rgba(255,255,255,.8) 0 1.2px,transparent 1.8px),
-    radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 1.5px);
-  background-size:26px 26px,17px 17px,11px 11px;
-  background-position:0 0,7px 9px,3px 4px;
-  opacity:.9;
-}
-.fried.dubai{
-  background:radial-gradient(circle at 32% 28%,#E9D9A0 0%,#CBA55A 45%,#8F6A2C 100%);
-}
-.fried.dubai::after{
-  background-image:
-    radial-gradient(circle,rgba(155,197,61,.95) 0 2.2px,transparent 2.8px),
-    radial-gradient(circle,rgba(92,122,30,.9) 0 1.6px,transparent 2.2px),
-    radial-gradient(circle,rgba(58,36,16,.85) 0 2px,transparent 2.6px);
-  background-size:23px 23px,15px 15px,19px 19px;
-  opacity:1;
-}
-.drizzle{position:absolute;inset:0;pointer-events:none}
-.drizzle path{fill:none;stroke-linecap:round}
-.oreo-svg{position:absolute;will-change:transform;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5))}
-.powder-burst{position:absolute;inset:0;pointer-events:none}
+.photo-frame.ring-green{box-shadow:0 0 0 5px var(--pistachio),0 22px 50px rgba(0,0,0,.55);transform:rotate(2deg)}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.oreo-svg{position:absolute;will-change:transform;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));z-index:2}
+.powder-burst{position:absolute;inset:-6% -6%;pointer-events:none;z-index:3}
 .powder-burst i{
   position:absolute;border-radius:50%;background:#fff;opacity:0;will-change:transform,opacity;
 }
-.pist-bit{position:absolute;width:14px;height:10px;border-radius:60% 40% 55% 45%;background:var(--pistachio);box-shadow:inset -2px -2px 4px rgba(0,0,0,.35);will-change:transform}
+.pist-bit{position:absolute;width:14px;height:10px;border-radius:60% 40% 55% 45%;background:var(--pistachio);box-shadow:inset -2px -2px 4px rgba(0,0,0,.35);will-change:transform;z-index:3}
+/* flyer-style numbered circle badge */
+.num-badge{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:44px;height:44px;border-radius:50%;background:#fff;color:var(--pink);
+  font-family:'Titan One',cursive;font-size:1.3rem;
+  box-shadow:0 0 0 3px var(--pink),0 6px 14px rgba(0,0,0,.4);
+  margin-right:14px;vertical-align:middle;transform:rotate(-4deg);
+}
+.num-badge.green{color:var(--pistachio-deep);box-shadow:0 0 0 3px var(--pistachio),0 6px 14px rgba(0,0,0,.4)}
 
 /* Ch1 */
 #ch1 .stage{background:
@@ -255,8 +258,6 @@ button{font:inherit;cursor:pointer}
 #ch3 h2 .half-b{color:var(--pistachio)}
 #ch3 .chapter-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
 #ch3 .chapter-copy p.desc{margin:0 auto}
-#ch3 .duo{display:flex;gap:clamp(12px,4vw,40px);margin-top:30px}
-#ch3 .duo .plate{width:clamp(130px,17vw,220px)}
 
 /* ============ SCHEDULE — horizontal run ============ */
 .route{position:relative;background:
@@ -373,6 +374,10 @@ button{font:inherit;cursor:pointer}
   .site-nav{display:none}
   .hero-oreo{width:44px!important;opacity:.55}
   .hero-oreo[data-depth="0.6"],.hero-oreo[data-depth="0.5"]{display:none}
+  .hero-mascot{position:static;width:88px;margin:0 auto 20px;transform:rotate(-6deg)}
+  .hero-photo::after{background:
+    radial-gradient(ellipse 120% 60% at 50% 46%,rgba(6,11,46,.75),rgba(6,11,46,.45) 60%,rgba(6,11,46,.2)),
+    linear-gradient(rgba(6,11,46,.65),transparent 25%,transparent 70%,rgba(6,11,46,.55))}
   .chapter-grid{grid-template-columns:1fr;text-align:center;justify-items:center}
   .chapter-copy p.desc{margin:0 auto}
   .chapter-visual{min-height:280px;order:-1}
@@ -394,15 +399,7 @@ button{font:inherit;cursor:pointer}
 <!-- ================= HEADER ================= -->
 <header class="site-header">
   <a class="logo-lockup" href="#top" aria-label="The Oreo Lady — home">
-    <!-- Oreo mark: sandwich cookie, side view -->
-    <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
-      <ellipse cx="32" cy="22" rx="26" ry="11" fill="#241408"/>
-      <ellipse cx="32" cy="20" rx="26" ry="11" fill="#3A2410"/>
-      <ellipse cx="32" cy="20" rx="18" ry="7" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="3 4"/>
-      <ellipse cx="32" cy="32" rx="24" ry="9" fill="#FFF8EE"/>
-      <ellipse cx="32" cy="44" rx="26" ry="11" fill="#241408"/>
-      <ellipse cx="32" cy="42" rx="26" ry="11" fill="#2E1A0B"/>
-    </svg>
+    <img class="logo-badge" src="assets/mascot.jpg" alt="" width="42" height="42">
     <span class="logo-word">THE <em>OREO</em> LADY</span>
   </a>
   <nav class="site-nav" aria-label="Main">
@@ -422,12 +419,12 @@ button{font:inherit;cursor:pointer}
 
 <!-- ================= CH 0 — HERO ================= -->
 <section class="hero" aria-label="The Oreo Lady">
+  <div class="hero-photo" aria-hidden="true"></div>
   <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="hero-mascot" aria-hidden="true"><img src="assets/mascot.jpg" alt=""></div>
 
   <!-- drifting oreos (parallax layer) -->
   <svg class="hero-oreo" data-depth="0.35" style="width:74px;top:16%;left:9%" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#2E1A0B"/><circle cx="32" cy="32" r="30" fill="none" stroke="#241408" stroke-width="3"/><circle cx="32" cy="32" r="21" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="4 5"/><circle cx="32" cy="32" r="12" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="3 4"/><circle cx="32" cy="32" r="4.5" fill="#241408"/></svg>
-  <svg class="hero-oreo" data-depth="0.6" style="width:110px;top:64%;left:5%" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="22" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="20" rx="26" ry="11" fill="#3A2410"/><ellipse cx="32" cy="32" rx="24" ry="9" fill="#FFF8EE"/><ellipse cx="32" cy="44" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="42" rx="26" ry="11" fill="#2E1A0B"/></svg>
-  <svg class="hero-oreo" data-depth="0.5" style="width:88px;top:20%;right:8%" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="22" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="20" rx="26" ry="11" fill="#3A2410"/><ellipse cx="32" cy="32" rx="24" ry="9" fill="#FFF8EE"/><ellipse cx="32" cy="44" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="42" rx="26" ry="11" fill="#2E1A0B"/></svg>
   <svg class="hero-oreo" data-depth="0.25" style="width:56px;top:72%;right:12%" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#2E1A0B"/><circle cx="32" cy="32" r="21" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="4 5"/><circle cx="32" cy="32" r="12" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="3 4"/><circle cx="32" cy="32" r="4.5" fill="#241408"/></svg>
 
   <div class="hero-inner">
@@ -464,21 +461,19 @@ button{font:inherit;cursor:pointer}
     <div class="big-num" aria-hidden="true">01</div>
     <div class="chapter-grid">
       <div class="chapter-copy">
-        <p class="kicker"><span class="k-dot"></span>Chapter One &middot; The Classic</p>
+        <p class="kicker"><span class="num-badge" aria-hidden="true">1</span>Chapter One &middot; The Classic</p>
         <h2 id="ch1-h">Regular <span>Powdered Sugar</span> Oreos</h2>
         <p class="sub marker">the one that started it all</p>
         <p class="desc">A whole Oreo, wrapped in batter, fried golden, and buried in a snowstorm of powdered sugar. Crispy outside, warm and melty in the middle.</p>
         <p class="price-tag"><span class="qty">6</span><span class="for">for</span><span class="usd">$10</span></p>
       </div>
       <div class="chapter-visual">
-        <div class="plate" id="plate1">
-          <!-- the oreo that becomes a fried oreo -->
-          <svg class="oreo-svg" id="ch1-oreo" style="width:52%;left:24%;top:22%" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#2E1A0B"/><circle cx="32" cy="32" r="21" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="4 5"/><circle cx="32" cy="32" r="12" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="3 4"/><circle cx="32" cy="32" r="4.5" fill="#241408"/></svg>
-          <div class="fried" id="ch1-fried" style="width:62%;height:60%;left:19%;top:18%"></div>
-          <div class="fried" style="width:34%;height:33%;left:2%;top:60%"></div>
-          <div class="fried" style="width:30%;height:29%;right:2%;top:64%;transform:rotate(14deg)"></div>
-          <div class="powder-burst" id="powder-burst" aria-hidden="true"></div>
+        <!-- the oreo that drops in before the platter appears -->
+        <svg class="oreo-svg" id="ch1-oreo" style="width:34%;left:33%;top:28%" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#2E1A0B"/><circle cx="32" cy="32" r="21" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="4 5"/><circle cx="32" cy="32" r="12" fill="none" stroke="#241408" stroke-width="2" stroke-dasharray="3 4"/><circle cx="32" cy="32" r="4.5" fill="#241408"/></svg>
+        <div class="photo-frame" id="frame1">
+          <img src="assets/menu-regular.jpg" alt="Six golden fried Oreos covered in powdered sugar on a silver foil platter, one cut open to show the Oreo inside" loading="lazy">
         </div>
+        <div class="powder-burst" id="powder-burst" aria-hidden="true"></div>
       </div>
     </div>
   </div>
@@ -490,29 +485,20 @@ button{font:inherit;cursor:pointer}
     <div class="big-num" aria-hidden="true">02</div>
     <div class="chapter-grid">
       <div class="chapter-copy">
-        <p class="kicker"><span class="k-dot"></span>Chapter Two &middot; The Viral One</p>
+        <p class="kicker"><span class="num-badge green" aria-hidden="true">2</span>Chapter Two &middot; The Viral One</p>
         <h2 id="ch2-h">Dubai <span>Chocolate Pistachio</span> Oreos</h2>
         <p class="sub marker" style="color:var(--pistachio)">yes, THAT dubai chocolate</p>
         <p class="desc">Fried Oreo meets the internet's favorite flavor — crunchy kataifi, pistachio cream, and dark chocolate drizzle over every golden bite.</p>
         <p class="price-tag"><span class="qty">4</span><span class="for">for</span><span class="usd">$10</span></p>
       </div>
       <div class="chapter-visual">
-        <div class="plate" id="plate2">
-          <div class="fried dubai" style="width:58%;height:56%;left:21%;top:20%"></div>
-          <div class="fried dubai" style="width:33%;height:32%;left:3%;top:62%"></div>
-          <div class="fried dubai" style="width:29%;height:28%;right:3%;top:64%;transform:rotate(-10deg)"></div>
-          <!-- chocolate drizzle drawn on scroll -->
-          <svg class="drizzle" viewBox="0 0 440 440" aria-hidden="true">
-            <path id="drizzle-path" d="M60 150 C140 90 200 210 260 150 S 380 120 400 190 M80 250 C160 200 220 310 300 250 S 400 240 420 300"
-              stroke="#241408" stroke-width="9"/>
-            <path id="drizzle-path2" d="M70 200 C150 150 210 260 290 200 S 390 180 415 245"
-              stroke="#9BC53D" stroke-width="6"/>
-          </svg>
-          <span class="pist-bit" style="left:10%;top:30%" data-f="0.6"></span>
-          <span class="pist-bit" style="left:80%;top:26%" data-f="1"></span>
-          <span class="pist-bit" style="left:64%;top:88%" data-f="0.8"></span>
-          <span class="pist-bit" style="left:26%;top:92%" data-f="1.2"></span>
+        <div class="photo-frame ring-green" id="frame2">
+          <img src="assets/menu-dubai.jpg" alt="Four fried Oreos wrapped in golden kataifi with chocolate and green pistachio cream drizzle, one cut open" loading="lazy">
         </div>
+        <span class="pist-bit" style="left:6%;top:22%" data-f="0.6"></span>
+        <span class="pist-bit" style="left:88%;top:16%" data-f="1"></span>
+        <span class="pist-bit" style="left:80%;top:90%" data-f="0.8"></span>
+        <span class="pist-bit" style="left:10%;top:88%" data-f="1.2"></span>
       </div>
     </div>
   </div>
@@ -527,13 +513,12 @@ button{font:inherit;cursor:pointer}
     <div class="big-num" aria-hidden="true">03</div>
     <div class="chapter-grid">
       <div class="chapter-copy">
-        <p class="kicker" style="justify-content:center"><span class="k-dot"></span>Chapter Three &middot; The Peacemaker</p>
+        <p class="kicker" style="justify-content:center"><span class="num-badge" aria-hidden="true">3</span>Chapter Three &middot; The Peacemaker</p>
         <h2 id="ch3-h"><span class="half-a">Half</span> / <span class="half-b">Half</span></h2>
         <p class="sub marker" style="color:var(--cyan)">can't choose? don't.</p>
         <p class="desc">Three regular powdered sugar, three Dubai chocolate pistachio. One plate, zero regrets, everybody at the table wins.</p>
-        <div class="duo" aria-hidden="true">
-          <div class="plate"><div class="fried" style="width:82%;height:80%;left:9%;top:8%"></div></div>
-          <div class="plate"><div class="fried dubai" style="width:82%;height:80%;left:9%;top:8%"></div></div>
+        <div class="photo-frame" id="frame3" style="width:clamp(230px,30vh,340px);margin:28px auto 0">
+          <img src="assets/menu-halfhalf.jpg" alt="Foil platter split between three powdered sugar fried Oreos and three pistachio drizzled Dubai fried Oreos" loading="lazy">
         </div>
         <p class="price-tag"><span class="qty">3 + 3</span><span class="for">for</span><span class="usd">$10</span></p>
       </div>
@@ -652,7 +637,7 @@ button{font:inherit;cursor:pointer}
 <footer class="site-footer">
   <div class="footer-inner">
     <a class="logo-lockup" href="#top" aria-label="Back to top">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="22" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="20" rx="26" ry="11" fill="#3A2410"/><ellipse cx="32" cy="32" rx="24" ry="9" fill="#FFF8EE"/><ellipse cx="32" cy="44" rx="26" ry="11" fill="#241408"/><ellipse cx="32" cy="42" rx="26" ry="11" fill="#2E1A0B"/></svg>
+      <img class="logo-badge" src="assets/mascot.jpg" alt="" width="42" height="42">
       <span class="logo-word">THE <em>OREO</em> LADY</span>
     </a>
     <div class="socials">
@@ -740,12 +725,11 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
   var tl = gsap.timeline({
     scrollTrigger: { trigger: "#ch1", start: "top top", end: "+=140%", pin: true, scrub: true }
   });
-  tl.fromTo("#ch1-oreo", {yPercent:-160, rotation:-140, opacity:1},
+  tl.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
                          {yPercent:0, rotation:20, ease:"power2.in", duration:0.3})
-    .to("#ch1-oreo", {scale:0.55, opacity:0, duration:0.12}, ">-0.02")
-    .fromTo("#ch1-fried", {scale:0.35, opacity:0}, {scale:1, opacity:1, ease:"back.out(2)", duration:0.22}, "<")
-    .fromTo("#plate1 .fried:not(#ch1-fried)", {scale:0, opacity:0},
-            {scale:1, opacity:1, stagger:0.06, ease:"back.out(2.4)", duration:0.18}, ">-0.05")
+    .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.12}, ">-0.02")
+    .fromTo("#frame1", {scale:0.4, opacity:0, rotation:8},
+            {scale:1, opacity:1, rotation:-2, ease:"back.out(1.8)", duration:0.28}, "<")
     .fromTo("#powder-burst i",
             {y:-90, opacity:0},
             {y:40, opacity:0.95, stagger:{each:0.008, from:"random"}, ease:"power1.in", duration:0.3}, ">-0.1")
@@ -754,25 +738,16 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
     .to("#ch1 .big-num", {xPercent:-18, duration:1}, 0);
 })();
 
-/* ---------- CH2: dubai — drizzle draws itself ---------- */
+/* ---------- CH2: dubai — the platter slides up under a pistachio rain ---------- */
 (function(){
-  var paths = ["drizzle-path","drizzle-path2"].map(function(id){
-    var p = document.getElementById(id);
-    var len = p.getTotalLength();
-    p.style.strokeDasharray = len;
-    p.style.strokeDashoffset = prefersReduced ? 0 : len;
-    return p;
-  });
   if (prefersReduced) return;
   var tl = gsap.timeline({
     scrollTrigger: { trigger: "#ch2", start: "top top", end: "+=140%", pin: true, scrub: true }
   });
-  tl.fromTo("#plate2 .fried", {scale:0.4, opacity:0, y:60},
-            {scale:1, opacity:1, y:0, stagger:0.07, ease:"back.out(2)", duration:0.25})
-    .to(paths[0], {strokeDashoffset:0, ease:"none", duration:0.4}, ">-0.05")
-    .to(paths[1], {strokeDashoffset:0, ease:"none", duration:0.35}, ">-0.25")
-    .fromTo("#plate2 .pist-bit", {scale:0, rotation:-90},
-            {scale:1, rotation:20, stagger:0.05, ease:"back.out(3)", duration:0.2}, ">-0.2")
+  tl.fromTo("#frame2", {yPercent:60, scale:0.5, opacity:0, rotation:-8},
+            {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.35})
+    .fromTo("#ch2 .pist-bit", {scale:0, rotation:-90, y:-60},
+            {scale:1, rotation:20, y:0, stagger:0.05, ease:"back.out(3)", duration:0.25}, ">-0.15")
     .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:44},
             {opacity:1, y:0, stagger:0.05, duration:0.3, ease:"power3.out"}, 0.15)
     .to("#ch2 .big-num", {xPercent:18, duration:1}, 0);
@@ -787,10 +762,10 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
   tl.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.35})
     .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.35}, "<")
     .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.25}, ">-0.1")
-    .fromTo("#ch3 .chapter-copy > *", {opacity:0, y:50},
+    .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:50},
             {opacity:1, y:0, stagger:0.06, duration:0.32, ease:"power3.out"}, ">-0.1")
-    .fromTo("#ch3 .duo .plate", {y:80, rotation:-8, opacity:0},
-            {y:0, rotation:0, opacity:1, stagger:0.1, ease:"back.out(1.8)", duration:0.3}, "<")
+    .fromTo("#frame3", {scale:0.5, rotation:-10, opacity:0},
+            {scale:1, rotation:-2, opacity:1, ease:"back.out(1.8)", duration:0.3}, "<+0.05")
     .to("#ch3 .big-num", {yPercent:-14, duration:1}, 0);
 })();
 
@@ -841,6 +816,16 @@ if (!prefersReduced){
   gsap.to(".hero-inner", {
     yPercent: -24, opacity: 0.25, ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom 30%", scrub: true }
+  });
+  gsap.from(".hero-mascot", { scale: 0, rotation: -40, duration: 0.9, ease: "back.out(1.7)", delay: 0.9 });
+  gsap.to(".hero-mascot", { y: "+=14", rotation: -2, duration: 3, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  gsap.to(".hero-mascot", {
+    yPercent: -120, opacity: 0, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom 45%", scrub: true }
+  });
+  gsap.to(".hero-photo", {
+    yPercent: 12, scale: 1.08, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
   });
 }
 
