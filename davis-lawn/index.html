@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Davis Lawn Service &amp; Hauling — Mowing, Cleanups, Junk Removal | Free Quotes</title>
+<meta name="description" content="Davis Lawn Service & Hauling — lawn care, yard cleanups, junk removal and hauling for homes, businesses, and municipal contracts. Licensed, reliable, free quotes.">
+<!-- ============================================================
+     PLACEHOLDERS TO FILL BEFORE LAUNCH (search for TODO):
+     1. Phone number — every tel: link + visible numbers  (currently 555 placeholder)
+     2. Service area — city/county names in hero, service-area section, JSON-LD
+     3. "Since 20XX" year + licensed/insured claim in trust strip
+     4. City-contract details in the municipal band (ask Davis what the
+        contracts actually cover: right-of-way mowing? code-enforcement lots?
+        storm debris? demolition hauls?)
+     5. Reviews — swap placeholders for real Facebook reviews
+     6. Before/after — swap CSS scenes for real job photos from their FB page
+     7. GHL form embed — marked slot inside #quote
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DAVIS LAWN SERVICE & HAULING — conversion-first, motion accents,
+   zero scroll-jacking. All art is CSS/SVG (no generated images).
+   ============================================================ */
+:root{
+  --green:#1E6B34;
+  --green-deep:#124423;
+  --green-dark:#0C2E17;
+  --lime:#8FD14F;
+  --charcoal:#1C1F24;
+  --asphalt:#2A2E35;
+  --orange:#F2842B;
+  --orange-deep:#D96C15;
+  --paper:#F7F8F4;
+  --ink:#171A16;
+  --line:#E2E5DC;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);
+  font-size:16px;line-height:1.55;overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Anton',sans-serif;font-weight:400;line-height:1.04;letter-spacing:.015em;text-transform:uppercase}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+::selection{background:var(--lime);color:var(--green-dark)}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--orange);color:#fff;padding:12px 20px;z-index:300;font-weight:700;border-radius:0 0 10px 0}
+.skip-link:focus{left:0}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.kicker{font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:.75rem;color:var(--green)}
+.section{padding:clamp(64px,9vw,110px) 0}
+.section-head{max-width:640px;margin-bottom:clamp(30px,5vw,54px)}
+.section-head h2{font-size:clamp(1.9rem,4.6vw,3.2rem);color:var(--green-dark);margin-top:10px}
+.section-head p{margin-top:12px;color:#4A5245;font-weight:500}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:14px 26px;border-radius:12px;border:0;
+  font-weight:800;font-size:1rem;text-decoration:none;letter-spacing:.01em;
+  transition:transform .18s,box-shadow .18s,background .18s;
+}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 6px 18px rgba(242,132,43,.38)}
+.btn-orange:hover{background:var(--orange-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(242,132,43,.5)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55)}
+.btn-outline:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-deep);transform:translateY(-2px)}
+
+/* ---------- header ---------- */
+.site-header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  background:rgba(12,46,23,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.header-in{max-width:1180px;margin:0 auto;padding:10px clamp(18px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+.brand svg{width:46px;height:46px;flex:none}
+.brand .b-name{font-family:'Anton',sans-serif;font-size:1.15rem;letter-spacing:.04em;line-height:1}
+.brand .b-sub{font-size:.62rem;font-weight:700;letter-spacing:.24em;color:var(--lime);text-transform:uppercase}
+.main-nav{display:flex;gap:4px}
+.main-nav a{
+  color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:.9rem;
+  padding:10px 14px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center;
+  transition:background .18s,color .18s;
+}
+.main-nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.header-cta{display:flex;align-items:center;gap:10px}
+.header-phone{display:none;color:#fff;font-weight:800;text-decoration:none;font-size:.95rem}
+@media(min-width:1020px){.header-phone{display:inline-flex;align-items:center;gap:8px}}
+
+/* ---------- mobile sticky call bar ---------- */
+.mobile-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:110;display:none;
+  grid-template-columns:1fr 1fr;gap:1px;background:var(--green-dark);
+  transform:translateY(110%);transition:transform .3s ease;
+  padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -6px 24px rgba(0,0,0,.25);
+}
+.mobile-bar.show{transform:translateY(0)}
+.mobile-bar a{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:58px;font-weight:800;text-decoration:none;color:#fff;font-size:1rem;
+}
+.mobile-bar a svg{width:20px;height:20px}
+.mobile-bar .m-call{background:var(--green)}
+.mobile-bar .m-quote{background:var(--orange)}
+@media(max-width:860px){
+  .mobile-bar{display:grid}
+  .main-nav{display:none}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;
+  background:linear-gradient(180deg,#0E3A1D 0%,var(--green-deep) 45%,var(--green) 100%);
+  padding:120px 0 90px;color:#fff;
+}
+.sky-glow{position:absolute;top:-18%;right:-8%;width:56vw;height:56vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(143,209,79,.35),rgba(143,209,79,.06) 55%,transparent 70%);pointer-events:none}
+.cloud{position:absolute;opacity:.16;pointer-events:none;will-change:transform}
+/* mown-lawn stripes floor */
+.lawn{
+  position:absolute;left:-12%;right:-12%;bottom:-4%;height:38%;
+  background:repeating-linear-gradient(90deg,
+    #1E6B34 0 90px,#2A7F42 90px 180px);
+  transform:perspective(600px) rotateX(58deg);transform-origin:bottom center;
+  box-shadow:inset 0 40px 60px rgba(0,0,0,.35);
+}
+.treeline{position:absolute;left:0;right:0;bottom:32%;height:110px;opacity:.5;pointer-events:none}
+.hero-truck{position:absolute;bottom:2.5%;left:2%;width:clamp(150px,18vw,250px);opacity:.95;will-change:transform;filter:drop-shadow(0 14px 24px rgba(0,0,0,.35))}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:center}
+.hero-copy .kicker{color:var(--lime)}
+.hero-copy h1{font-size:clamp(2.6rem,6.2vw,4.6rem);margin-top:14px;text-wrap:balance}
+.hero-copy h1 em{font-style:normal;color:var(--lime)}
+.hero-copy .lead{margin-top:18px;font-size:clamp(1.02rem,2vw,1.2rem);color:rgba(255,255,255,.9);font-weight:500;max-width:48ch}
+.hero-ctas{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.hero-proof{margin-top:34px;display:flex;gap:22px;flex-wrap:wrap}
+.proof-item{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.9rem;color:rgba(255,255,255,.92)}
+.proof-item svg{width:22px;height:22px;color:var(--lime);flex:none}
+
+/* quote form card */
+.quote-card{
+  background:#fff;color:var(--ink);border-radius:20px;padding:28px 26px;
+  box-shadow:0 28px 60px rgba(0,0,0,.35);
+  border-top:6px solid var(--orange);
+}
+.quote-card h2{font-size:1.5rem;color:var(--green-dark)}
+.quote-card .qc-sub{font-size:.9rem;color:#5A6353;font-weight:500;margin-top:6px}
+.quote-form{margin-top:18px;display:grid;gap:12px}
+.quote-form label{font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:#39412F;display:block;margin-bottom:5px}
+.quote-form input,.quote-form select,.quote-form textarea{
+  width:100%;border:2px solid var(--line);border-radius:10px;padding:12px 14px;
+  font:inherit;background:#FBFCF9;transition:border-color .18s;min-height:48px;
+}
+.quote-form textarea{min-height:84px;resize:vertical}
+.quote-form input:focus,.quote-form select:focus,.quote-form textarea:focus{outline:none;border-color:var(--green)}
+.quote-form .btn{width:100%}
+.form-note{font-size:.78rem;color:#7A8272;text-align:center;margin-top:2px}
+.form-success{
+  display:none;background:#EAF6E2;border:2px solid var(--lime);border-radius:12px;
+  padding:16px;text-align:center;font-weight:600;color:var(--green-dark);
+}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;background:var(--charcoal);padding:14px 0;border-top:3px solid var(--lime);border-bottom:3px solid var(--lime)}
+.marquee-track{display:flex;width:max-content;will-change:transform}
+.marquee-track span{font-family:'Anton',sans-serif;color:#fff;font-size:clamp(1rem,2.4vw,1.4rem);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;padding:0 .7em}
+.marquee-track .dot{color:var(--lime)}
+
+/* ---------- trust strip ---------- */
+.trust{background:#fff;border-bottom:1px solid var(--line)}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:clamp(28px,4vw,44px) 0}
+.trust-item{display:flex;align-items:center;gap:14px}
+.trust-item .t-ic{width:52px;height:52px;border-radius:14px;background:#EAF6E2;color:var(--green);display:flex;align-items:center;justify-content:center;flex:none}
+.trust-item .t-ic svg{width:26px;height:26px}
+.trust-item strong{display:block;font-size:1rem;color:var(--green-dark)}
+.trust-item small{color:#5A6353;font-weight:500}
+@media(max-width:900px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.trust-grid{grid-template-columns:1fr 1fr;gap:14px}.trust-item{flex-direction:column;text-align:center}}
+
+/* ---------- services ---------- */
+.services{background:var(--paper)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,26px)}
+.svc-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 26px;
+  transition:transform .2s,box-shadow .2s,border-color .2s;display:flex;flex-direction:column;
+}
+.svc-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(18,68,35,.14);border-color:var(--lime)}
+.svc-ic{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--green),var(--green-deep));color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.svc-ic svg{width:30px;height:30px}
+.svc-card h3{font-size:1.15rem;color:var(--green-dark);margin-bottom:8px}
+.svc-card p{color:#4A5245;font-weight:500;font-size:.94rem;flex:1}
+.svc-card .svc-link{margin-top:16px;font-weight:800;color:var(--orange);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.svc-card .svc-link:hover{text-decoration:underline}
+@media(max-width:900px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+
+/* ---------- municipal band ---------- */
+.muni{background:linear-gradient(135deg,var(--charcoal),#14261B 70%,var(--green-dark));color:#fff;position:relative;overflow:hidden}
+.muni::after{content:"";position:absolute;right:-140px;top:-140px;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(143,209,79,.18),transparent 65%)}
+.muni-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(26px,5vw,60px);align-items:center;position:relative;z-index:1}
+.muni h2{font-size:clamp(1.8rem,4.2vw,3rem);color:#fff}
+.muni h2 em{font-style:normal;color:var(--lime)}
+.muni p{color:rgba(255,255,255,.85);font-weight:500;margin-top:14px}
+.muni-list{margin-top:22px;display:grid;gap:12px}
+.muni-list li{list-style:none;display:flex;gap:12px;align-items:flex-start;font-weight:600}
+.muni-list svg{width:22px;height:22px;color:var(--lime);flex:none;margin-top:2px}
+.muni-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:30px;backdrop-filter:blur(4px)}
+.muni-card h3{color:#fff;font-size:1.2rem}
+.muni-card p{font-size:.92rem}
+@media(max-width:860px){.muni-grid{grid-template-columns:1fr}}
+
+/* ---------- how it works ---------- */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,28px)}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px 26px 28px}
+.step .s-num{
+  position:absolute;top:-22px;left:24px;width:44px;height:44px;border-radius:12px;
+  background:var(--orange);color:#fff;font-family:'Anton',sans-serif;font-size:1.25rem;
+  display:flex;align-items:center;justify-content:center;transform:rotate(-4deg);
+  box-shadow:0 8px 18px rgba(242,132,43,.4);
+}
+.step h3{color:var(--green-dark);font-size:1.1rem;margin-bottom:8px;margin-top:6px}
+.step p{color:#4A5245;font-weight:500;font-size:.94rem}
+@media(max-width:820px){.steps-grid{grid-template-columns:1fr}.step{margin-top:16px}}
+
+/* ---------- before / after ---------- */
+.ba{background:#fff}
+.ba-frame{
+  position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 24px 50px rgba(18,68,35,.16);aspect-ratio:16/7;min-height:280px;user-select:none;
+}
+.ba-scene{position:absolute;inset:0}
+/* AFTER scene — striped healthy lawn */
+.scene-after{background:
+  linear-gradient(180deg,#BFE3F7 0 34%,transparent 34%),
+  repeating-linear-gradient(90deg,#2A7F42 0 70px,#1E6B34 70px 140px)}
+.scene-after::before{content:"";position:absolute;left:0;right:0;top:26%;height:9%;
+  background:radial-gradient(60px 22px at 12% 50%,#2E5B3C 60%,transparent 62%),
+             radial-gradient(80px 26px at 34% 50%,#35684A 60%,transparent 62%),
+             radial-gradient(70px 24px at 58% 50%,#2E5B3C 60%,transparent 62%),
+             radial-gradient(90px 28px at 84% 50%,#35684A 60%,transparent 62%)}
+/* BEFORE scene — patchy overgrown yard w/ junk pile silhouette */
+.scene-before{background:
+  linear-gradient(180deg,#C9C29B 0 34%,transparent 34%),
+  repeating-linear-gradient(74deg,#7A7A3C 0 26px,#8B8A48 26px 52px,#6E6D35 52px 74px)}
+.scene-before::after{content:"";position:absolute;bottom:12%;right:8%;width:26%;height:34%;
+  background:
+    radial-gradient(48% 60% at 30% 80%,#4A4438 0 60%,transparent 61%),
+    radial-gradient(40% 52% at 62% 74%,#5A5348 0 60%,transparent 61%),
+    radial-gradient(30% 40% at 84% 86%,#3D382E 0 60%,transparent 61%);
+  filter:blur(1px)}
+.ba-clip{position:absolute;inset:0;clip-path:inset(0 50% 0 0)}
+.ba-handle{
+  position:absolute;top:0;bottom:0;left:50%;width:4px;background:#fff;z-index:3;
+  box-shadow:0 0 14px rgba(0,0,0,.4);pointer-events:none;transform:translateX(-50%);
+}
+.ba-handle::after{
+  content:"\2194";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:48px;height:48px;border-radius:50%;background:var(--orange);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+.ba-range{
+  position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;
+  -webkit-appearance:none;appearance:none;
+}
+.ba-tag{position:absolute;top:14px;z-index:2;background:rgba(0,0,0,.55);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:8px}
+.ba-tag.before{left:14px}
+.ba-tag.after{right:14px}
+.ba-note{margin-top:14px;text-align:center;font-size:.85rem;color:#7A8272;font-weight:500}
+
+/* ---------- reviews ---------- */
+.reviews{background:var(--paper)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,26px)}
+.rev-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:12px}
+.stars{color:var(--orange);letter-spacing:2px;font-size:1.05rem}
+.rev-card p{color:#3C4436;font-weight:500;font-style:italic;flex:1}
+.rev-card .who{font-weight:800;color:var(--green-dark);font-size:.9rem}
+.rev-card .who small{display:block;color:#7A8272;font-weight:600}
+@media(max-width:820px){.rev-grid{grid-template-columns:1fr}}
+
+/* ---------- service area ---------- */
+.area{background:#fff}
+.area-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(26px,5vw,60px);align-items:center}
+.area-map{position:relative;display:flex;align-items:center;justify-content:center}
+.area-map svg{width:100%;max-width:420px}
+.area-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.area-list li{list-style:none;display:flex;align-items:center;gap:10px;font-weight:600;color:#39412F}
+.area-list svg{width:18px;height:18px;color:var(--green);flex:none}
+@media(max-width:820px){.area-grid{grid-template-columns:1fr}}
+
+/* ---------- FAQ ---------- */
+.faq{background:var(--paper)}
+.faq-list{max-width:760px}
+.faq-list details{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.faq-list summary{
+  cursor:pointer;font-weight:700;color:var(--green-dark);padding:18px 20px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;
+}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary::after{content:"+";font-family:'Anton',sans-serif;font-size:1.3rem;color:var(--orange);transition:transform .2s}
+.faq-list details[open] summary::after{transform:rotate(45deg)}
+.faq-list details p{padding:0 20px 18px;color:#4A5245;font-weight:500}
+
+/* ---------- final CTA + footer ---------- */
+.final-cta{background:linear-gradient(135deg,var(--green-deep),var(--green));color:#fff;text-align:center}
+.final-cta h2{font-size:clamp(2rem,5vw,3.4rem);color:#fff}
+.final-cta h2 em{font-style:normal;color:var(--lime)}
+.final-cta p{margin-top:14px;color:rgba(255,255,255,.88);font-weight:500}
+.final-cta .hero-ctas{justify-content:center}
+.site-footer{background:var(--green-dark);color:rgba(255,255,255,.85);padding:46px 0 110px}
+.footer-grid{display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between;align-items:flex-start}
+.site-footer .brand .b-name{color:#fff}
+.site-footer a{color:rgba(255,255,255,.85)}
+.footer-col strong{display:block;color:#fff;margin-bottom:10px;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase}
+.footer-col a{display:block;text-decoration:none;font-weight:500;margin-bottom:8px}
+.footer-col a:hover{color:var(--lime)}
+.fb-pill{display:inline-flex!important;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:10px 18px;font-weight:700!important}
+.fb-pill svg{width:18px;height:18px}
+.footer-fine{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500}
+@media(min-width:861px){.site-footer{padding-bottom:46px}}
+
+/* ---------- responsive hero ---------- */
+@media(max-width:900px){
+  .hero{padding:110px 0 70px}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-truck{display:none}
+}
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#services">Skip to services</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-in">
+    <a class="brand" href="#top" aria-label="Davis Lawn Service and Hauling — home">
+      <!-- Logo: shield, D monogram sprouting grass, truck silhouette -->
+      <svg viewBox="0 0 96 96" role="img" aria-hidden="true">
+        <path d="M48 4 88 16v34c0 22-16 36-40 42C24 86 8 72 8 50V16Z" fill="#1E6B34" stroke="#8FD14F" stroke-width="4" stroke-linejoin="round"/>
+        <text x="48" y="52" text-anchor="middle" font-family="Anton, Arial Black, sans-serif" font-size="38" fill="#fff">D</text>
+        <path d="M40 24c0-6 2-11 2-11s3 4 3 10M47 23c1-7 5-12 5-12s2 6 0 12M55 24c2-5 6-8 6-8s0 5-3 9"
+          fill="none" stroke="#8FD14F" stroke-width="3.4" stroke-linecap="round"/>
+        <g fill="#fff">
+          <path d="M28 62h22v9H28zM50 64h9l5 5v2h-14z"/>
+          <circle cx="35" cy="73" r="3.6" fill="#0C2E17" stroke="#fff" stroke-width="2"/>
+          <circle cx="56" cy="73" r="3.6" fill="#0C2E17" stroke="#fff" stroke-width="2"/>
+        </g>
+      </svg>
+      <span><span class="b-name">DAVIS</span><br><span class="b-sub">Lawn Service &amp; Hauling</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#commercial">Commercial</a>
+      <a href="#work">Our Work</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-cta">
+      <!-- TODO: real phone number in BOTH the tel: link and the visible text -->
+      <a class="header-phone" href="tel:+15550123456" aria-label="Call Davis Lawn Service">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (555) 012-3456
+      </a>
+      <a class="btn btn-orange" href="#quote" style="min-height:46px;padding:10px 20px">Free Quote</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= MOBILE STICKY BAR ================= -->
+<div class="mobile-bar" id="mobile-bar" aria-hidden="false">
+  <!-- TODO: real phone number -->
+  <a class="m-call" href="tel:+15550123456">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call Now
+  </a>
+  <a class="m-quote" href="#quote">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+    Free Quote
+  </a>
+</div>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-label="Davis Lawn Service and Hauling">
+  <div class="sky-glow" aria-hidden="true"></div>
+  <svg class="cloud" style="width:180px;top:14%;left:8%" viewBox="0 0 120 40" aria-hidden="true"><ellipse cx="30" cy="26" rx="26" ry="12" fill="#fff"/><ellipse cx="60" cy="20" rx="30" ry="14" fill="#fff"/><ellipse cx="92" cy="27" rx="24" ry="11" fill="#fff"/></svg>
+  <svg class="cloud" style="width:120px;top:8%;right:22%" viewBox="0 0 120 40" aria-hidden="true"><ellipse cx="30" cy="26" rx="26" ry="12" fill="#fff"/><ellipse cx="60" cy="20" rx="30" ry="14" fill="#fff"/><ellipse cx="92" cy="27" rx="24" ry="11" fill="#fff"/></svg>
+  <svg class="treeline" preserveAspectRatio="none" viewBox="0 0 1200 110" aria-hidden="true">
+    <path d="M0 110V70c30-8 40-30 60-30s25 18 50 22 35-26 60-26 30 20 55 24 40-34 70-34 35 26 60 30 30-14 55-14 30 12 55 16 45-28 75-28 35 22 60 26 30-10 55-10 35 14 60 18 40-30 70-30 30 22 55 26 35-12 60-12 30 14 55 18 40-24 65-24 40 26 75 30v40Z" fill="#0C2E17"/>
+  </svg>
+  <div class="lawn" aria-hidden="true"></div>
+  <!-- truck (drives in on load) -->
+  <svg class="hero-truck" id="hero-truck" viewBox="0 0 300 140" aria-hidden="true">
+    <rect x="10" y="52" width="150" height="52" rx="6" fill="#2A2E35"/>
+    <rect x="16" y="40" width="138" height="18" rx="4" fill="#F2842B"/>
+    <path d="M160 66h58l26 22v16h-84z" fill="#1C1F24"/>
+    <path d="M212 72h14l16 14h-30z" fill="#BFE3F7" opacity=".85"/>
+    <rect x="10" y="98" width="234" height="10" rx="4" fill="#14171B"/>
+    <circle cx="58" cy="112" r="17" fill="#14171B" stroke="#DDE3E9" stroke-width="5"/>
+    <circle cx="196" cy="112" r="17" fill="#14171B" stroke="#DDE3E9" stroke-width="5"/>
+    <text x="84" y="88" text-anchor="middle" font-family="Anton, Arial Black, sans-serif" font-size="20" fill="#8FD14F">DAVIS</text>
+  </svg>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">Lawn care &middot; Hauling &middot; Cleanups</p>
+      <!-- TODO: confirm service area wording -->
+      <h1>Clean yards. <em>Cleared lots.</em> Gone junk.</h1>
+      <p class="lead">Davis Lawn Service &amp; Hauling keeps homes, businesses, and city properties looking sharp — mowing, cleanups, and junk hauled off the same week you call.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-orange" href="#quote">Get my free quote</a>
+        <!-- TODO: real phone number -->
+        <a class="btn btn-outline" href="tel:+15550123456">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call now
+        </a>
+      </div>
+      <div class="hero-proof">
+        <span class="proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Free estimates</span>
+        <span class="proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Residential &amp; commercial</span>
+        <span class="proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> City contract experience</span>
+      </div>
+    </div>
+
+    <!-- ============ QUOTE FORM (the conversion engine) ============ -->
+    <div class="quote-card" id="quote">
+      <h2>Get a free quote</h2>
+      <p class="qc-sub">Tell us what you need — we'll get back fast with a straight price.</p>
+      <!-- ============================================================
+           GHL EMBED SLOT — replace this form with the GoHighLevel
+           form/survey embed when the sub-account is live. Keep the
+           heading above. Until then, submissions open a pre-filled
+           email/SMS the visitor sends themselves.
+           ============================================================ -->
+      <form class="quote-form" id="quote-form" novalidate>
+        <div>
+          <label for="qf-name">Name</label>
+          <input id="qf-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="qf-phone">Phone</label>
+          <input id="qf-phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+        <div>
+          <label for="qf-service">What do you need?</label>
+          <select id="qf-service" name="service" required>
+            <option value="" selected disabled>Choose a service…</option>
+            <option>Lawn mowing &amp; edging</option>
+            <option>Yard cleanup</option>
+            <option>Hedge / tree trimming</option>
+            <option>Junk removal &amp; hauling</option>
+            <option>Lot or land clearing</option>
+            <option>Commercial / municipal work</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div>
+          <label for="qf-msg">Details (optional)</label>
+          <textarea id="qf-msg" name="message" placeholder="Address area, size of the job, anything we should know…"></textarea>
+        </div>
+        <button class="btn btn-orange" type="submit">Send my quote request</button>
+        <p class="form-note">No spam, no pressure — just a price.</p>
+      </form>
+      <div class="form-success" id="form-success">
+        Thanks! Your email app just opened with your request ready to send — hit send and we'll get right back to you. Or call us now:
+        <!-- TODO: real phone number -->
+        <a href="tel:+15550123456" style="font-weight:800">(555) 012-3456</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track">
+    <span>Mowing</span><span class="dot">&#9679;</span>
+    <span>Hauling</span><span class="dot">&#9679;</span>
+    <span>Cleanups</span><span class="dot">&#9679;</span>
+    <span>Lot Clearing</span><span class="dot">&#9679;</span>
+    <span>Junk Removal</span><span class="dot">&#9679;</span>
+    <span>Free Quotes</span><span class="dot">&#9679;</span>
+  </div>
+</div>
+
+<!-- ================= TRUST STRIP ================= -->
+<section class="trust" aria-label="Why choose Davis">
+  <div class="wrap trust-grid">
+    <!-- TODO: confirm licensed/insured, years, and contract claims with Davis -->
+    <div class="trust-item">
+      <span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <span><strong>Licensed &amp; insured</strong><small>Your property is protected</small></span>
+    </div>
+    <div class="trust-item">
+      <span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+      <span><strong>Fast turnaround</strong><small>Most jobs quoted same day</small></span>
+    </div>
+    <div class="trust-item">
+      <span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span>
+      <span><strong>City contract experience</strong><small>Trusted with public work</small></span>
+    </div>
+    <div class="trust-item">
+      <span class="t-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>
+      <span><strong>Straight pricing</strong><small>Free estimates, no surprises</small></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services section" id="services" aria-labelledby="svc-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">What we do</p>
+      <h2 id="svc-h">One call handles the whole property</h2>
+      <p>Lawn crew and hauling crew in one company — no juggling contractors.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-5 6 5v11"/><path d="M4 20c2-3 4-9 2-14M20 20c-2-3-4-9-2-14"/></svg></span>
+        <h3>Mowing &amp; edging</h3>
+        <p>Weekly or bi-weekly cuts with clean edges and blown-off walks. The stripe game is real.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c6 0 6-4 9-4s3 4 9 4"/><path d="M12 17V8"/><path d="M12 8C10 8 7 6 7 3c3 0 5 2 5 5zM12 8c2 0 5-2 5-5-3 0-5 2-5 5z"/></svg></span>
+        <h3>Yard cleanups</h3>
+        <p>Overgrown, leaf-buried, or post-season messes reset to fresh — beds, brush, and all.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-7"/><path d="M12 15l-4-4h3V7h2v4h3z" fill="currentColor" stroke="none"/><path d="M12 2a5 5 0 015 5c0 3-2.5 5-5 8-2.5-3-5-5-5-8a5 5 0 015-5z"/></svg></span>
+        <h3>Hedge &amp; tree trimming</h3>
+        <p>Shaped hedges, lifted canopies, and limbs off the roof line — hauled away when we're done.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12h13v6H1zM14 14h4l4 3v1h-8z"/><circle cx="6" cy="19" r="1.6"/><circle cx="18" cy="19" r="1.6"/><path d="M3 12V8h6v4"/></svg></span>
+        <h3>Junk removal &amp; hauling</h3>
+        <p>Furniture, appliances, construction debris, whole-garage cleanouts — loaded and gone.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20l3-9 4 4 3-7 4 12"/></svg></span>
+        <h3>Lot &amp; land clearing</h3>
+        <p>Vacant lots, overgrown parcels, and problem properties brought back to code.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+      <article class="svc-card">
+        <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8L12 3 7 8"/><path d="M12 3v12"/><path d="M5 15l-2 6h18l-2-6"/></svg></span>
+        <h3>Storm &amp; debris response</h3>
+        <p>Downed limbs and storm mess cleared fast so your property is safe and usable again.</p>
+        <a class="svc-link" href="#quote">Get a quote &#8594;</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMERCIAL / MUNICIPAL ================= -->
+<section class="muni section" id="commercial" aria-labelledby="muni-h">
+  <div class="wrap muni-grid">
+    <div>
+      <p class="kicker" style="color:var(--lime)">Commercial &amp; municipal</p>
+      <h2 id="muni-h">Trusted with <em>public work</em></h2>
+      <!-- TODO: Ask Davis exactly what the city contracts cover and rewrite
+           this paragraph with specifics (right-of-way mowing? code-enforcement
+           lot mowing? storm debris removal? demolition hauling?). Specific
+           beats generic for winning more bids. -->
+      <p>Davis Lawn Service &amp; Hauling holds municipal contracts and takes on commercial properties — the crews, equipment, and reliability to keep public and business spaces maintained on schedule, every time.</p>
+      <ul class="muni-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Scheduled maintenance for commercial properties &amp; HOAs</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Municipal lot mowing &amp; clearing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Debris &amp; bulk hauling at contract scale</li>
+      </ul>
+    </div>
+    <div class="muni-card">
+      <h3>Property manager or city buyer?</h3>
+      <p style="margin-top:10px">Get a bid package with references, insurance certificates, and W-9 — we make procurement easy.</p>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-orange" href="#quote">Request a bid</a>
+        <!-- TODO: real phone number -->
+        <a class="btn btn-outline" href="tel:+15550123456">Call the office</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section" aria-labelledby="how-h" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Dead simple</p>
+      <h2 id="how-h">How it works</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <span class="s-num">1</span>
+        <h3>Call or send the form</h3>
+        <p>Thirty seconds. Tell us what's growing, piling up, or needs to disappear.</p>
+      </div>
+      <div class="step">
+        <span class="s-num">2</span>
+        <h3>Free straight quote</h3>
+        <p>We look at the job and give you one clear price — no surprises on the invoice.</p>
+      </div>
+      <div class="step">
+        <span class="s-num">3</span>
+        <h3>We handle it</h3>
+        <p>Crew shows up, does the work, hauls the mess, leaves it clean. Done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BEFORE / AFTER ================= -->
+<section class="ba section" id="work" aria-labelledby="ba-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">The difference</p>
+      <h2 id="ba-h">Drag to see what a visit does</h2>
+    </div>
+    <!-- TODO: replace the two CSS scenes with real before/after job photos
+         from their Facebook page when you get them (same slider works:
+         put an <img> inside each .ba-scene). -->
+    <div class="ba-frame">
+      <div class="ba-scene scene-after" aria-hidden="true"></div>
+      <div class="ba-clip" id="ba-clip"><div class="ba-scene scene-before" aria-hidden="true"></div></div>
+      <span class="ba-tag before">Before</span>
+      <span class="ba-tag after">After</span>
+      <div class="ba-handle" id="ba-handle" aria-hidden="true"></div>
+      <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+    </div>
+    <p class="ba-note">Illustration — real job photos coming soon. Follow the work on <a href="https://www.facebook.com/p/Davis-Lawn-Service-Hauling-100078407036199/" target="_blank" rel="noopener">Facebook</a>.</p>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="reviews section" aria-labelledby="rev-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Word around town</p>
+      <h2 id="rev-h">Neighbors keep calling back</h2>
+    </div>
+    <!-- TODO: replace with real Facebook reviews / recommendations -->
+    <div class="rev-grid">
+      <article class="rev-card">
+        <span class="stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>"Sample review — swap with a real Facebook recommendation. Yard looked brand new and the old shed junk was gone the same day."</p>
+        <span class="who">Homeowner<small>Residential cleanup</small></span>
+      </article>
+      <article class="rev-card">
+        <span class="stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>"Sample review — swap with a real one. Shows up when they say they will, which around here is worth its weight in gold."</p>
+        <span class="who">Property manager<small>Monthly maintenance</small></span>
+      </article>
+      <article class="rev-card">
+        <span class="stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>"Sample review — swap with a real one. Fair price, fast quote, and they hauled off things two other companies wouldn't touch."</p>
+        <span class="who">Local business<small>Junk removal</small></span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICE AREA ================= -->
+<section class="area section" aria-labelledby="area-h">
+  <div class="wrap area-grid">
+    <div class="area-map" aria-hidden="true">
+      <svg viewBox="0 0 300 260">
+        <path d="M60 40c40-24 110-28 150 0 30 22 44 60 36 100-8 42-40 76-86 82-44 6-90-14-110-52C30 132 24 62 60 40z" fill="#EAF6E2" stroke="#8FD14F" stroke-width="3" stroke-dasharray="8 6"/>
+        <circle cx="150" cy="128" r="10" fill="#F2842B"/>
+        <circle cx="150" cy="128" r="20" fill="none" stroke="#F2842B" stroke-width="2" opacity=".5"/>
+        <circle cx="150" cy="128" r="32" fill="none" stroke="#F2842B" stroke-width="2" opacity=".25"/>
+        <circle cx="96" cy="90" r="5" fill="#1E6B34"/>
+        <circle cx="205" cy="86" r="5" fill="#1E6B34"/>
+        <circle cx="212" cy="170" r="5" fill="#1E6B34"/>
+        <circle cx="92" cy="180" r="5" fill="#1E6B34"/>
+      </svg>
+    </div>
+    <div>
+      <p class="kicker">Where we work</p>
+      <!-- TODO: real city/county names -->
+      <h2 id="area-h" style="font-size:clamp(1.9rem,4.6vw,3rem);color:var(--green-dark);margin-top:10px">Serving [City] and surrounding areas</h2>
+      <p style="margin-top:12px;color:#4A5245;font-weight:500">In the area? You're on the route. Not sure? Call — if we can get a truck to it, we'll quote it.</p>
+      <ul class="area-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg> [City / neighborhood]</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg> [City / neighborhood]</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg> [City / neighborhood]</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg> [Surrounding county]</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq section" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Questions</p>
+      <h2 id="faq-h">Before you call</h2>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>How much does it cost?</summary>
+        <p>Every property is different, so we quote each job — free. Most residential mows and hauls get a same-day price. No obligation, no pressure.</p>
+      </details>
+      <details>
+        <summary>What will you haul away?</summary>
+        <p>Furniture, appliances, yard debris, construction leftovers, garage and shed cleanouts — if it fits on the truck, it's probably gone. Ask us about anything unusual.</p>
+      </details>
+      <details>
+        <summary>Do you do recurring lawn service?</summary>
+        <p>Yes — weekly and bi-weekly schedules for homes and commercial properties. Set it once and stop thinking about your lawn.</p>
+      </details>
+      <details>
+        <summary>Do you work with businesses and the city?</summary>
+        <p>Yes. We maintain commercial properties and hold municipal contracts. Bid packages with insurance certs and references are available on request.</p>
+      </details>
+      <details>
+        <summary>How do I pay?</summary>
+        <!-- TODO: confirm payment methods with Davis -->
+        <p>Cash, check, or card — whatever's easiest for you. Invoicing available for commercial accounts.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta section" aria-labelledby="cta-h">
+  <div class="wrap">
+    <h2 id="cta-h">Your property, <em>handled.</em></h2>
+    <p>Get a free quote in the time it takes to mow one strip.</p>
+    <div class="hero-ctas" style="margin-top:28px">
+      <a class="btn btn-orange" href="#quote">Get my free quote</a>
+      <!-- TODO: real phone number -->
+      <a class="btn btn-outline" href="tel:+15550123456">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (555) 012-3456
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 96 96" aria-hidden="true">
+          <path d="M48 4 88 16v34c0 22-16 36-40 42C24 86 8 72 8 50V16Z" fill="#1E6B34" stroke="#8FD14F" stroke-width="4" stroke-linejoin="round"/>
+          <text x="48" y="52" text-anchor="middle" font-family="Anton, Arial Black, sans-serif" font-size="38" fill="#fff">D</text>
+          <path d="M40 24c0-6 2-11 2-11s3 4 3 10M47 23c1-7 5-12 5-12s2 6 0 12M55 24c2-5 6-8 6-8s0 5-3 9" fill="none" stroke="#8FD14F" stroke-width="3.4" stroke-linecap="round"/>
+          <g fill="#fff"><path d="M28 62h22v9H28zM50 64h9l5 5v2h-14z"/><circle cx="35" cy="73" r="3.6" fill="#0C2E17" stroke="#fff" stroke-width="2"/><circle cx="56" cy="73" r="3.6" fill="#0C2E17" stroke="#fff" stroke-width="2"/></g>
+        </svg>
+        <span><span class="b-name">DAVIS</span><br><span class="b-sub">Lawn Service &amp; Hauling</span></span>
+      </a>
+      <p style="margin-top:16px;max-width:32ch;font-weight:500;font-size:.9rem">Lawn care and hauling for homes, businesses, and municipal properties.</p>
+    </div>
+    <div class="footer-col">
+      <strong>Services</strong>
+      <a href="#services">Mowing &amp; edging</a>
+      <a href="#services">Yard cleanups</a>
+      <a href="#services">Junk removal &amp; hauling</a>
+      <a href="#commercial">Commercial &amp; municipal</a>
+    </div>
+    <div class="footer-col">
+      <strong>Get in touch</strong>
+      <!-- TODO: real phone number + hours -->
+      <a href="tel:+15550123456">(555) 012-3456</a>
+      <a href="#quote">Request a free quote</a>
+      <a class="fb-pill" href="https://www.facebook.com/p/Davis-Lawn-Service-Hauling-100078407036199/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Find us on Facebook
+      </a>
+    </div>
+  </div>
+  <div class="wrap footer-fine">&copy; 2026 Davis Lawn Service &amp; Hauling &middot; Free quotes &middot; Licensed &amp; insured <!-- TODO: confirm --></div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Davis Lawn Service & Hauling",
+  "description": "Lawn care, yard cleanups, junk removal and hauling for residential, commercial, and municipal properties.",
+  "telephone": "+1-555-012-3456",
+  "areaServed": "TODO: city/county",
+  "url": "https://example.com/davis-lawn/",
+  "sameAs": ["https://www.facebook.com/p/Davis-Lawn-Service-Hauling-100078407036199/"],
+  "priceRange": "Free estimates"
+}
+</script>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+"use strict";
+var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var JUMP = new URLSearchParams(location.search).get("jump");
+if (JUMP !== null) history.scrollRestoration = "manual";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- mobile sticky bar: appears after the hero ---------- */
+(function(){
+  var bar = document.getElementById("mobile-bar");
+  ScrollTrigger.create({
+    trigger: ".hero", start: "bottom 70%",
+    onEnter: function(){ bar.classList.add("show"); },
+    onLeaveBack: function(){ bar.classList.remove("show"); }
+  });
+})();
+
+/* ---------- before/after slider ---------- */
+(function(){
+  var range = document.getElementById("ba-range");
+  var clip = document.getElementById("ba-clip");
+  var handle = document.getElementById("ba-handle");
+  function set(v){
+    clip.style.clipPath = "inset(0 " + (100 - v) + "% 0 0)";
+    handle.style.left = v + "%";
+  }
+  range.addEventListener("input", function(){ set(+range.value); });
+  set(50);
+})();
+
+/* ---------- quote form: GHL slot placeholder behavior (mailto fallback) ---------- */
+(function(){
+  var form = document.getElementById("quote-form");
+  var success = document.getElementById("form-success");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    var d = new FormData(form);
+    var body = "Name: " + d.get("name") + "\nPhone: " + d.get("phone") +
+               "\nService: " + d.get("service") + "\nDetails: " + (d.get("message") || "-");
+    /* TODO: point at the business email, or remove once the GHL form embed is live */
+    location.href = "mailto:quotes@example.com?subject=" +
+      encodeURIComponent("Free quote request — " + d.get("service")) +
+      "&body=" + encodeURIComponent(body);
+    form.style.display = "none";
+    success.style.display = "block";
+  });
+})();
+
+/* ---------- motion accents (play-once on enter; zero pinning) ---------- */
+if (!prefersReduced){
+  /* hero entrance */
+  gsap.from(".hero-copy > *", { y: 34, opacity: 0, duration: 0.8, stagger: 0.09, ease: "power3.out", delay: 0.1 });
+  gsap.from(".quote-card", { y: 44, opacity: 0, duration: 0.9, ease: "power3.out", delay: 0.35 });
+  gsap.from("#hero-truck", { x: -420, duration: 1.6, ease: "power2.out", delay: 0.4 });
+  gsap.to("#hero-truck", { y: "-=5", duration: 1.6, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2 });
+
+  /* clouds drift forever */
+  document.querySelectorAll(".cloud").forEach(function(c, i){
+    gsap.to(c, { x: (i % 2 ? -1 : 1) * 60, duration: 22 + i * 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
+  });
+
+  /* marquee */
+  var track = document.getElementById("marquee-track");
+  track.innerHTML += track.innerHTML;
+  gsap.to(track, { xPercent: -50, ease: "none", duration: 26, repeat: -1 });
+
+  /* section reveals — play once, no scrubbing */
+  [
+    [".trust-item", ".trust", 0.08],
+    [".svc-card", ".svc-grid", 0.07],
+    [".muni-grid > *", ".muni", 0.12],
+    [".step", ".steps-grid", 0.12],
+    [".ba-frame", ".ba", 0],
+    [".rev-card", ".rev-grid", 0.1],
+    [".area-grid > *", ".area", 0.12],
+    [".faq-list details", ".faq-list", 0.06]
+  ].forEach(function(cfg){
+    gsap.from(cfg[0], {
+      y: 44, opacity: 0, duration: 0.7, stagger: cfg[2], ease: "power3.out",
+      scrollTrigger: { trigger: cfg[1], start: "top 78%" }
+    });
+  });
+  gsap.from(".final-cta .wrap > *", {
+    y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
+    scrollTrigger: { trigger: ".final-cta", start: "top 75%" }
+  });
+} else {
+  document.getElementById("mobile-bar").classList.add("show");
+}
+
+/* ---------- dev contract: ?jump + __ready + jank meter ---------- */
+var deltas = [], last = performance.now();
+(function jank(){
+  var now = performance.now();
+  deltas.push(now - last); last = now;
+  if (deltas.length >= 120){
+    window.__jankMax = Math.max(window.__jankMax || 0, Math.max.apply(null, deltas));
+    deltas.length = 0;
+  }
+  requestAnimationFrame(jank);
+})();
+function settle(){
+  ScrollTrigger.refresh();
+  if (JUMP !== null){
+    window.scrollTo(0, +JUMP || 0);
+    ScrollTrigger.update();
+    ScrollTrigger.getAll().forEach(function(st){
+      if (st.animation){ st.animation.totalProgress(st.progress > 0 ? 1 : 0); }
+    });
+  }
+  window.__ready = true;
+}
+if (document.fonts && document.fonts.ready){
+  document.fonts.ready.then(function(){ requestAnimationFrame(function(){ requestAnimationFrame(settle); }); });
+} else {
+  window.addEventListener("load", function(){ setTimeout(settle, 300); });
+}
+})();
+</script>
+</body>
+</html>
