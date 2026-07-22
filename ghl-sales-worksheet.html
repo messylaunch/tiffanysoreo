@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Oreo Lady × GoHighLevel — Sales Worksheet &amp; Pitch Playbook</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0A1045; --navy-deep:#060B2E; --pink:#FF2E9A; --cyan:#1FB6DB;
+  --pistachio:#7FA332; --ink:#1A1530; --paper:#FFFFFF; --soft:#F6F4FB; --line:#E4E0F0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--soft);line-height:1.55;font-size:15.5px}
+.page{max-width:880px;margin:0 auto;padding:0 24px 80px}
+h1,h2,h3{font-family:'Titan One',cursive;font-weight:400;line-height:1.1}
+
+/* cover */
+.cover{background:linear-gradient(135deg,var(--navy-deep),var(--navy) 60%,#1B2A8F);color:#fff;border-radius:0 0 28px 28px;padding:64px 32px 52px;text-align:center;margin-bottom:44px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 0%,rgba(255,46,154,.25),transparent 60%),radial-gradient(500px 300px at 10% 100%,rgba(41,216,255,.18),transparent 60%);pointer-events:none}
+.cover .eyebrow{font-weight:900;letter-spacing:.3em;text-transform:uppercase;font-size:.72rem;color:#29D8FF;margin-bottom:14px}
+.cover h1{font-size:clamp(1.9rem,5vw,3rem);position:relative;z-index:1}
+.cover h1 em{font-style:normal;color:var(--pink)}
+.cover .sub{margin-top:14px;font-weight:700;opacity:.9;position:relative;z-index:1}
+.cover .who{margin-top:22px;font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.65;position:relative;z-index:1}
+
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:32px 30px;margin-bottom:26px}
+.sec-label{display:inline-block;font-weight:900;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+h2{font-size:1.5rem;color:var(--navy);margin-bottom:14px}
+h3{font-size:1.05rem;color:var(--navy);margin:20px 0 8px}
+p{margin-bottom:10px}
+p.big{font-size:1.08rem;font-weight:700}
+ul,ol{margin:8px 0 12px 22px}
+li{margin-bottom:7px}
+strong{color:var(--navy)}
+.pink{color:var(--pink)} .green{color:var(--pistachio)}
+
+/* movie beats */
+.beat{display:flex;gap:16px;margin:18px 0;align-items:flex-start}
+.beat .num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--navy);color:#fff;font-family:'Titan One',cursive;display:flex;align-items:center;justify-content:center;font-size:1.05rem;transform:rotate(-3deg)}
+.beat:nth-child(even) .num{background:var(--pink);transform:rotate(3deg)}
+.beat h3{margin:2px 0 6px}
+.script{background:var(--soft);border-left:4px solid var(--pink);border-radius:0 12px 12px 0;padding:14px 18px;font-style:italic;font-weight:600;margin:10px 0}
+.script .dir{display:block;font-style:normal;font-weight:900;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+
+/* worksheet blanks */
+.blank{display:block;border-bottom:2px dotted #B9B2D6;min-height:30px;margin:6px 0 14px}
+.blank.short{display:inline-block;min-width:120px;min-height:0;margin:0 6px;vertical-align:baseline}
+.qa{margin-bottom:6px;font-weight:700}
+.hint{font-size:.85rem;color:#6E6790;font-weight:600;margin-top:-8px;margin-bottom:10px}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#FBFAFE}
+td:first-child{font-weight:800;color:var(--navy)}
+.write-cell{min-width:110px;border-bottom:2px dotted #B9B2D6}
+
+.callout{background:linear-gradient(135deg,#FFF0F8,#EDFAFF);border:1px solid #F7C8E4;border-radius:14px;padding:18px 20px;margin:16px 0}
+.callout .t{font-weight:900;color:var(--pink);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;margin-bottom:6px}
+.warn{background:#FFF8E8;border:1px solid #F0DFAE;border-radius:14px;padding:14px 18px;font-size:.9rem;font-weight:600;margin:14px 0}
+
+.check{list-style:none;margin-left:0}
+.check li{padding-left:34px;position:relative;margin-bottom:10px;font-weight:600}
+.check li::before{content:"";position:absolute;left:0;top:1px;width:20px;height:20px;border:2.5px solid var(--pink);border-radius:6px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.mini{background:var(--soft);border-radius:12px;padding:16px 18px}
+.mini h3{margin-top:0}
+.price{font-family:'Titan One',cursive;color:var(--pink);font-size:1.3rem}
+
+footer{max-width:880px;margin:0 auto;padding:0 24px 60px;font-size:.82rem;color:#6E6790;font-weight:600;text-align:center}
+
+@media print{
+  body{background:#fff;font-size:12.5px}
+  .page{padding:0;max-width:100%}
+  .cover{border-radius:0;padding:34px}
+  section{border:none;border-bottom:1px solid var(--line);border-radius:0;page-break-inside:avoid;padding:20px 8px}
+  a{text-decoration:none;color:inherit}
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <p class="eyebrow">Internal — sales playbook &amp; worksheet</p>
+  <h1>Selling <em>The Oreo Lady</em> on GoHighLevel</h1>
+  <p class="sub">How Tiffany goes from "DM me and hope" to a business that books, bills, and blasts texts by itself.</p>
+  <p class="who">Prepared for Michael &middot; Prospect: Tiffany Ponds, The Oreo Lady (Lakeland / 863)</p>
+</div>
+
+<div class="page">
+
+<!-- ================= ACT STRUCTURE ================= -->
+<section>
+  <span class="sec-label">The one-liner</span>
+  <h2>What you're actually selling</h2>
+  <p class="big">You're not selling her software. You're selling her a <span class="pink">line of customers that forms before she even parks</span> — and a business that runs while her hands are busy frying.</p>
+  <p>Every feature maps back to one of three promises. If a sentence out of your mouth doesn't ladder up to one of these, cut it:</p>
+  <ul>
+    <li><strong>"They find you."</strong> — schedule page, text alerts, "she's in your area" blasts.</li>
+    <li><strong>"They pay you without you stopping."</strong> — invoices, tap-to-pay, deposits for event bookings.</li>
+    <li><strong>"They book you while you sleep."</strong> — a calendar link instead of 40 back-and-forth DMs.</li>
+  </ul>
+</section>
+
+<!-- ================= HER DAY TODAY ================= -->
+<section>
+  <span class="sec-label">Act I — the world before</span>
+  <h2>Tiffany's day right now (the pain, in her words)</h2>
+  <p>She's mobile. Small events, business pop-ups, community days — a different spot all the time. That means every single week she is manually:</p>
+  <table>
+    <tr><th>What she does by hand</th><th>What it costs her</th></tr>
+    <tr><td>Answering "where are you today??" DMs</td><td>Hours of phone time while she's trying to fry and serve</td></tr>
+    <tr><td>Posting the schedule on TikTok/FB and hoping people see it</td><td>The algorithm decides who finds out she's nearby</td></tr>
+    <tr><td>Texting regulars one-by-one when she's in their area</td><td>Only her top 10 fans ever get told; the other 200 miss it</td></tr>
+    <tr><td>Taking event bookings in Messenger threads</td><td>Details get lost, dates double-book, no deposits = no-shows</td></tr>
+    <tr><td>Chasing payment at the table / after events</td><td>Awkward money talk, missed payments, no records</td></tr>
+    <tr><td>Nothing happens when she misses a call mid-rush</td><td>That's a booked birthday party going to someone else</td></tr>
+  </table>
+  <div class="callout">
+    <p class="t">The emotional core</p>
+    <p>Her product already sells itself — the flyer says "come hungry" and people do. The bottleneck is that <strong>she is the marketing department, booking system, and cashier</strong>, and all three shut down the second the fryer gets busy. GHL is her hiring three employees for less than one day of sales a month.</p>
+  </div>
+</section>
+
+<!-- ================= DISCOVERY ================= -->
+<section>
+  <span class="sec-label">Worksheet — fill this in while you talk</span>
+  <h2>Discovery questions (get her telling the story)</h2>
+  <p class="hint">Don't pitch yet. Ask, write, nod. Her answers become your pitch.</p>
+
+  <p class="qa">1. How many spots do you set up at in a normal week? Which days are biggest?</p>
+  <span class="blank"></span>
+  <p class="qa">2. How do people find out where you are right now? How many ask and miss you?</p>
+  <span class="blank"></span>
+  <p class="qa">3. When someone wants to book you for a party or a business pop-up, what happens, step by step?</p>
+  <span class="blank"></span>
+  <p class="qa">4. Ever had someone book and ghost? Did you have a deposit?</p>
+  <span class="blank"></span>
+  <p class="qa">5. How do people pay you today — cash, Cash App, card? Ever lose a sale because of payment?</p>
+  <span class="blank"></span>
+  <p class="qa">6. If 200 people near Lakeland could get a text the morning you set up — what would Saturday look like?</p>
+  <span class="blank"></span>
+  <p class="qa">7. What's an average order ($10 boxes — how many per customer)? How many customers on a good day vs. slow day?</p>
+  <span class="blank"></span>
+  <p class="qa">8. How much time per week goes to DMs, scheduling posts, and chasing bookings?</p>
+  <span class="blank"></span>
+</section>
+
+<!-- ================= PAIN → FEATURE MAP ================= -->
+<section>
+  <span class="sec-label">Act II — the tool belt</span>
+  <h2>Pain &rarr; GHL feature &rarr; what she gets</h2>
+  <p class="hint">Never lead with the feature name. Lead with her sentence from discovery, then show the fix.</p>
+  <table>
+    <tr><th>She said…</th><th>GHL piece</th><th>Her new reality</th></tr>
+    <tr>
+      <td>"Everybody texts me asking where I'm at"</td>
+      <td>SMS list + broadcast campaigns (LC Phone)</td>
+      <td>One tap: "I'm at the Saturday market til 4 🍪" goes to every fan at once. The line forms before she finishes setting up.</td>
+    </tr>
+    <tr>
+      <td>"I post the schedule but people miss it"</td>
+      <td>Website + funnel page with the weekly schedule</td>
+      <td>One link in every bio. The site you already built becomes the hub; GHL powers the forms behind it.</td>
+    </tr>
+    <tr>
+      <td>"Bookings happen in my DMs"</td>
+      <td>Calendars + booking forms + automated reminders</td>
+      <td>"Book me" link → they pick a date, she approves, both get reminders. Zero threads, zero double-booking.</td>
+    </tr>
+    <tr>
+      <td>"People book and don't show"</td>
+      <td>Invoicing + deposits (Stripe) on the booking</td>
+      <td>Booking isn't real until the deposit clears. No-shows basically end.</td>
+    </tr>
+    <tr>
+      <td>"I miss calls during the rush"</td>
+      <td>Missed-call text-back automation</td>
+      <td>Missed call → instant text: "Frying right now! 🍪 Book me here / see today's spot here." A lost call becomes a captured lead.</td>
+    </tr>
+    <tr>
+      <td>"I want businesses to invite me"</td>
+      <td>Pipelines + simple CRM</td>
+      <td>Every office, church, and school that shows interest sits in a pipeline she can follow up with in one screen.</td>
+    </tr>
+    <tr>
+      <td>"How do I get more reviews/followers?"</td>
+      <td>Review requests + workflows after each sale/booking</td>
+      <td>After each event: automatic "leave a review / follow the TikTok" text while the sugar's still on their fingers.</td>
+    </tr>
+  </table>
+  <div class="warn">Keep the first build to <strong>three automations max</strong>: (1) text-alert list + broadcast, (2) booking calendar with deposit, (3) missed-call text-back. Everything else is a "phase 2" upsell once she trusts it.</div>
+</section>
+
+<!-- ================= ROI MATH ================= -->
+<section>
+  <span class="sec-label">Worksheet — do this math WITH her</span>
+  <h2>The napkin math that closes the deal</h2>
+  <p class="hint">Use her numbers from discovery Q6–Q7. Conservative beats hype — let small numbers win.</p>
+  <p class="qa">Average order: $<span class="blank short"></span> &nbsp;&times;&nbsp; extra customers per stop from text blasts: <span class="blank short"></span> &nbsp;=&nbsp; $<span class="blank short"></span> per stop</p>
+  <p class="qa">&times; stops per month: <span class="blank short"></span> &nbsp;=&nbsp; <strong>extra $<span class="blank short"></span>/month from alerts alone</strong></p>
+  <p class="qa">+ event bookings saved from ghosting (deposits): <span class="blank short"></span> &times; avg event $<span class="blank short"></span> = $<span class="blank short"></span></p>
+  <p class="qa">+ hours of DM/admin time back per week: <span class="blank short"></span> hrs</p>
+  <div class="callout">
+    <p class="t">The line to say out loud</p>
+    <p>"If the text list brings you just <strong>one extra $10 box per stop</strong>, the whole system pays for itself. Everything past that is profit — and it texts 200 people, not one."</p>
+  </div>
+</section>
+
+<!-- ================= THE PITCH AS A MOVIE ================= -->
+<section>
+  <span class="sec-label">Act III — the pitch, shot for shot</span>
+  <h2>The pitch script (play it like a movie)</h2>
+
+  <div class="beat">
+    <div class="num">1</div>
+    <div>
+      <h3>Cold open — show, don't tell (2 min)</h3>
+      <p>Open the new website on your phone and hand it to her. Say nothing. Let her scroll her own brand looking like a movie.</p>
+      <div class="script"><span class="dir">You say</span>"This is already yours. Now let me show you the machine that goes behind it."</div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="num">2</div>
+    <div>
+      <h3>The villain — her Tuesday (3 min)</h3>
+      <p>Replay her own discovery answers back to her: the DMs, the missed calls, the ghosted bookings. She should be nodding "yes, that's exactly it."</p>
+      <div class="script"><span class="dir">You say</span>"Every one of those is you doing a job a robot should be doing while you're trying to fry."</div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="num">3</div>
+    <div>
+      <h3>The demo — one text, one line (5 min)</h3>
+      <p>Live demo with HER phone: put her number in the form, then send the broadcast — "🍪 Oreo Lady is posted up at [spot] til 4!" Her phone buzzes in her hand. That buzz is the sale.</p>
+      <p>Then book a fake party on the calendar and show the deposit invoice hit. Two moments, that's the whole demo.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="num">4</div>
+    <div>
+      <h3>The math — her numbers, not yours (3 min)</h3>
+      <p>Do the napkin-math worksheet above together, in front of her, with her numbers.</p>
+    </div>
+  </div>
+
+  <div class="beat">
+    <div class="num">5</div>
+    <div>
+      <h3>The close — small yes (2 min)</h3>
+      <div class="script"><span class="dir">You say</span>"Let's not boil the ocean. Month one: your text list, your booking link, your missed-call catcher. I set it all up — you just keep frying. If it doesn't put money in your pocket in 30 days, we shut it off."</div>
+      <p>Then be quiet. First one to talk loses.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OBJECTIONS ================= -->
+<section>
+  <span class="sec-label">The boss fights</span>
+  <h2>Objections &amp; answers</h2>
+  <table>
+    <tr><th>She says</th><th>You say</th></tr>
+    <tr>
+      <td>"That's too much a month"</td>
+      <td>"It's less than one slow Saturday. And we just did the math — one extra customer per stop covers it. You're not buying software, you're buying the line."</td>
+    </tr>
+    <tr>
+      <td>"I already use Facebook &amp; TikTok"</td>
+      <td>"Keep them — they're your stage. But the algorithm decides who sees a post. A text gets opened by ~98% of people within minutes. Socials build fans; the text list cashes them in."</td>
+    </tr>
+    <tr>
+      <td>"I'm not techy"</td>
+      <td>"You never touch the machine. Your whole job is one button: 'I'm here.' I build it, I maintain it, you fry."</td>
+    </tr>
+    <tr>
+      <td>"Let me think about it"</td>
+      <td>"Totally fair. Can I at least set up the text list this week so you're collecting numbers while you think? Those fans are walking past your table every day either way." <em>(Foot in the door — the list makes leaving harder.)</em></td>
+    </tr>
+    <tr>
+      <td>"Will my customers actually sign up?"</td>
+      <td>"You hand them a box and say 'want a text when I'm back in your area?' Who says no to that? We'll put a QR card on the table that does it for you."</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ================= PACKAGING ================= -->
+<section>
+  <span class="sec-label">Your side of the table</span>
+  <h2>How to package &amp; price it (options for you)</h2>
+  <div class="grid2">
+    <div class="mini">
+      <h3>Option A — Done-for-you retainer <span class="green">(recommended)</span></h3>
+      <p><span class="price">$250–$500 setup</span> + <span class="price">$150–$300/mo</span></p>
+      <ul>
+        <li>You run a GHL agency account; she's a sub-account</li>
+        <li>You own the build, she pays for outcomes</li>
+        <li>Include X broadcasts/mo + booking upkeep</li>
+      </ul>
+    </div>
+    <div class="mini">
+      <h3>Option B — SaaS mode</h3>
+      <p><span class="price">$97–$197/mo</span> self-serve</p>
+      <ul>
+        <li>She gets her own login, you white-label it</li>
+        <li>Lower touch, but she's "not techy" — riskier churn</li>
+        <li>Better later, once she's hooked on the results</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warn"><strong>Cost reality check (verify current pricing before you quote):</strong> GHL agency plans have historically run ~$97/mo (Starter) and ~$297/mo (Unlimited, lets you spin up unlimited sub-accounts — the one you want if Tiffany is client #1 of many). SMS/voice usage through LC Phone bills per-segment on top (fractions of a cent per text; a 200-person blast costs roughly a couple of dollars). A2P 10DLC registration is required for business texting in the US — build the ~1–2 week approval into your timeline and don't promise texts on day one.</div>
+  <h3>The 30-day rollout you promise her</h3>
+  <ul class="check">
+    <li>Week 1 — Sub-account, phone number, A2P registration filed, website connected, QR "join the list" cards printed</li>
+    <li>Week 2 — Booking calendar + deposit invoicing live; missed-call text-back on</li>
+    <li>Week 3 — First text blast to the early list; schedule workflow running</li>
+    <li>Week 4 — Review the numbers together: list size, bookings, revenue. Renew on results.</li>
+  </ul>
+</section>
+
+<!-- ================= DEMO CHECKLIST ================= -->
+<section>
+  <span class="sec-label">Before you walk in</span>
+  <h2>Demo-day checklist</h2>
+  <ul class="check">
+    <li>Website loaded on your phone (and offline screenshots as backup)</li>
+    <li>Demo GHL sub-account with her branding + logo already in it</li>
+    <li>A test SMS campaign ready to fire at her number live</li>
+    <li>A booking calendar with a $25 deposit invoice attached</li>
+    <li>This worksheet printed — fill the blanks in front of her</li>
+    <li>One printed QR card mock-up: "Text alerts when the Oreo Lady is near you"</li>
+    <li>Know her menu cold: 6/$10 regular, 4/$10 Dubai, 3+3/$10 half-half</li>
+  </ul>
+  <div class="callout">
+    <p class="t">Remember</p>
+    <p>She sells joy out of a fryer. Match her energy — this pitch should feel like her brand: fun, fast, and impossible to ignore. The website is the trailer. GHL is the machine that sells the tickets.</p>
+  </div>
+</section>
+
+</div>
+<footer>Internal sales document — not for the customer. Pricing figures are estimates; confirm current GoHighLevel &amp; LC Phone pricing before quoting.</footer>
+<script>window.__ready = true;</script>
+</body>
+</html>
