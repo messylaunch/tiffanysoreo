@@ -274,13 +274,31 @@ button{font:inherit;cursor:pointer}
   padding:12px 18px;font-size:.95rem;
 }
 .route-head .note strong{color:var(--pink-soft)}
-.route-stage{position:relative;overflow:hidden}
+.route-stage{position:relative}
+.route-scroller{
+  overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--pink) rgba(255,255,255,.08);
+  cursor:grab;
+}
+.route-scroller.dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.route-scroller::-webkit-scrollbar{height:6px}
+.route-scroller::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:3px}
+.route-scroller::-webkit-scrollbar-thumb{background:var(--pink);border-radius:3px}
 .route-track{
   display:flex;gap:clamp(18px,3vw,34px);width:max-content;
-  padding:60px clamp(20px,6vw,80px) 120px;align-items:stretch;will-change:transform;
+  padding:50px clamp(20px,6vw,80px) 46px;align-items:stretch;
 }
+.route-nav{display:flex;gap:12px;justify-content:center;padding:4px 20px 70px}
+.route-btn{
+  width:54px;height:54px;border-radius:50%;flex:none;
+  border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.07);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.route-btn:hover{background:var(--pink);border-color:var(--pink);transform:scale(1.08)}
+.route-btn svg{width:22px;height:22px}
 .stop-card{
-  position:relative;width:clamp(240px,26vw,320px);flex:none;
+  position:relative;width:clamp(240px,26vw,320px);flex:none;scroll-snap-align:center;
   background:rgba(255,255,255,.05);
   border:2px solid rgba(255,255,255,.16);
   border-radius:22px;padding:26px 24px 24px;
@@ -299,9 +317,9 @@ button{font:inherit;cursor:pointer}
 .stop-card.is-cta{background:linear-gradient(145deg,rgba(255,46,154,.25),rgba(41,216,255,.15));border-style:dashed}
 .stop-card.is-cta h3{color:#fff}
 .route-line{
-  position:absolute;left:0;right:0;bottom:86px;height:4px;z-index:0;
+  position:absolute;left:0;right:0;bottom:118px;height:4px;z-index:0;
   background:repeating-linear-gradient(90deg,var(--cyan) 0 18px,transparent 18px 34px);
-  opacity:.35;
+  opacity:.35;pointer-events:none;
 }
 
 /* ============ ALERTS ============ */
@@ -531,10 +549,11 @@ button{font:inherit;cursor:pointer}
   <div class="route-head">
     <p class="kicker">The mobile part of the mobile dessert lady</p>
     <h2 id="route-h">Where's the <em>Oreo Lady</em> this week?</h2>
-    <p class="note"><strong>The live schedule drops every week</strong> on TikTok &amp; Facebook — here's the kind of week she runs. Scroll sideways through the route &#8594;</p>
+    <p class="note"><strong>The live schedule drops every week</strong> on TikTok &amp; Facebook — here's the kind of week she runs. Swipe or tap the arrows to ride the route.</p>
   </div>
   <div class="route-stage" id="route-stage">
     <div class="route-line" aria-hidden="true"></div>
+    <div class="route-scroller" id="route-scroller" tabindex="0" role="region" aria-label="Weekly schedule stops — scrolls horizontally">
     <div class="route-track" id="route-track">
       <article class="stop-card">
         <p class="day">Weekday pop-up</p>
@@ -573,6 +592,11 @@ button{font:inherit;cursor:pointer}
         <p class="when" style="margin-bottom:18px">She'll bring the fryer.</p>
         <a class="btn btn-pink" href="#book">Book the Oreo Lady</a>
       </article>
+    </div>
+    </div>
+    <div class="route-nav">
+      <button class="route-btn" id="route-prev" aria-label="Previous stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="route-btn" id="route-next" aria-label="Next stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
     </div>
   </div>
 </section>
@@ -706,7 +730,9 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
    ambient/parallax triggers after.
    ============================================================ */
 
-/* ---------- CH1: the classic — oreo becomes fried, powder storm ---------- */
+/* ---------- Chapters: pinned cinematic scrub on DESKTOP only.
+   On mobile there is no pinning — each scene sits in normal flow and
+   auto-plays once when it scrolls into view, so scrolling never "sticks". ---------- */
 (function(){
   var burst = document.getElementById("powder-burst");
   for (var i = 0; i < 26; i++){
@@ -722,79 +748,150 @@ if (!prefersReduced && JUMP === null && typeof Lenis !== "undefined"){
     gsap.set("#powder-burst i", {opacity: .9});
     return;
   }
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch1", start: "top top", end: "+=140%", pin: true, scrub: true }
+
+  var mm = gsap.matchMedia();
+
+  /* desktop — pinned + scrubbed, front-loaded: photo & copy land in the
+     first third of the pin so nobody sits on an empty number screen */
+  mm.add("(min-width: 861px)", function(){
+    var tl1 = gsap.timeline({
+      scrollTrigger: { trigger: "#ch1", start: "top top", end: "+=100%", pin: true, scrub: true }
+    });
+    tl1.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
+               {yPercent:0, rotation:20, ease:"power2.in", duration:0.22}, 0)
+      .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.1}, ">-0.02")
+      .fromTo("#frame1", {scale:0.4, opacity:0, rotation:8},
+              {scale:1, opacity:1, rotation:-2, ease:"back.out(1.8)", duration:0.24}, "<")
+      .fromTo("#powder-burst i", {y:-90, opacity:0},
+              {y:40, opacity:0.95, stagger:{each:0.007, from:"random"}, ease:"power1.in", duration:0.28}, ">-0.08")
+      .fromTo("#ch1 .chapter-copy > *", {opacity:0, y:44},
+              {opacity:1, y:0, stagger:0.04, duration:0.26, ease:"power3.out"}, 0.04)
+      .to("#ch1 .big-num", {xPercent:-18, duration:1}, 0);
+
+    var tl2 = gsap.timeline({
+      scrollTrigger: { trigger: "#ch2", start: "top top", end: "+=100%", pin: true, scrub: true }
+    });
+    tl2.fromTo("#frame2", {yPercent:60, scale:0.5, opacity:0, rotation:-8},
+               {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.3}, 0)
+      .fromTo("#ch2 .pist-bit", {scale:0, rotation:-90, y:-60},
+              {scale:1, rotation:20, y:0, stagger:0.05, ease:"back.out(3)", duration:0.22}, ">-0.12")
+      .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:44},
+              {opacity:1, y:0, stagger:0.04, duration:0.26, ease:"power3.out"}, 0.04)
+      .to("#ch2 .big-num", {xPercent:18, duration:1}, 0);
+
+    var tl3 = gsap.timeline({
+      scrollTrigger: { trigger: "#ch3", start: "top top", end: "+=100%", pin: true, scrub: true }
+    });
+    tl3.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.3}, 0)
+      .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.3}, "<")
+      .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.2}, ">-0.08")
+      .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:50},
+              {opacity:1, y:0, stagger:0.05, duration:0.28, ease:"power3.out"}, 0.12)
+      .fromTo("#frame3", {scale:0.5, rotation:-10, opacity:0},
+              {scale:1, rotation:-2, opacity:1, ease:"back.out(1.8)", duration:0.28}, "<+0.05")
+      .to("#ch3 .big-num", {yPercent:-14, duration:1}, 0);
   });
-  tl.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
-                         {yPercent:0, rotation:20, ease:"power2.in", duration:0.3})
-    .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.12}, ">-0.02")
-    .fromTo("#frame1", {scale:0.4, opacity:0, rotation:8},
-            {scale:1, opacity:1, rotation:-2, ease:"back.out(1.8)", duration:0.28}, "<")
-    .fromTo("#powder-burst i",
-            {y:-90, opacity:0},
-            {y:40, opacity:0.95, stagger:{each:0.008, from:"random"}, ease:"power1.in", duration:0.3}, ">-0.1")
-    .fromTo("#ch1 .chapter-copy > *", {opacity:0, y:44},
-            {opacity:1, y:0, stagger:0.05, duration:0.3, ease:"power3.out"}, 0.18)
-    .to("#ch1 .big-num", {xPercent:-18, duration:1}, 0);
+
+  /* mobile — natural scroll; scenes play themselves (real seconds, no scrub) */
+  mm.add("(max-width: 860px)", function(){
+    var tl1 = gsap.timeline({ scrollTrigger: { trigger: "#ch1", start: "top 65%" } });
+    tl1.fromTo("#ch1-oreo", {yPercent:-260, rotation:-140, opacity:1},
+               {yPercent:0, rotation:20, ease:"power2.in", duration:0.5})
+      .to("#ch1-oreo", {scale:0.5, opacity:0, duration:0.18}, ">-0.05")
+      .fromTo("#frame1", {scale:0.6, opacity:0, rotation:8},
+              {scale:1, opacity:1, rotation:-2, ease:"back.out(1.7)", duration:0.6}, "<")
+      .fromTo("#powder-burst i", {y:-90, opacity:0},
+              {y:40, opacity:0.95, stagger:{each:0.012, from:"random"}, ease:"power1.in", duration:0.7}, ">-0.3")
+      .fromTo("#ch1 .chapter-copy > *", {opacity:0, y:34},
+              {opacity:1, y:0, stagger:0.08, duration:0.5, ease:"power3.out"}, "<");
+
+    var tl2 = gsap.timeline({ scrollTrigger: { trigger: "#ch2", start: "top 65%" } });
+    tl2.fromTo("#frame2", {yPercent:20, scale:0.6, opacity:0, rotation:-8},
+               {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.6})
+      .fromTo("#ch2 .pist-bit", {scale:0, y:-40},
+              {scale:1, y:0, stagger:0.06, ease:"back.out(3)", duration:0.4}, ">-0.25")
+      .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:34},
+              {opacity:1, y:0, stagger:0.08, duration:0.5, ease:"power3.out"}, "<");
+
+    var tl3 = gsap.timeline({ scrollTrigger: { trigger: "#ch3", start: "top 65%" } });
+    tl3.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.5})
+      .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.5}, "<")
+      .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.35}, ">-0.15")
+      .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:34},
+              {opacity:1, y:0, stagger:0.07, duration:0.45, ease:"power3.out"}, ">-0.1")
+      .fromTo("#frame3", {scale:0.6, rotation:-10, opacity:0},
+              {scale:1, rotation:-2, opacity:1, ease:"back.out(1.7)", duration:0.5}, "<+0.1");
+  });
 })();
 
-/* ---------- CH2: dubai — the platter slides up under a pistachio rain ---------- */
+/* ---------- SCHEDULE: swipeable carousel — native horizontal scroll with
+   snap, arrow buttons, mouse drag, and a gentle auto-advance that stops the
+   moment the visitor takes over. No pinning, no scroll-jacking. ---------- */
 (function(){
-  if (prefersReduced) return;
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch2", start: "top top", end: "+=140%", pin: true, scrub: true }
-  });
-  tl.fromTo("#frame2", {yPercent:60, scale:0.5, opacity:0, rotation:-8},
-            {yPercent:0, scale:1, opacity:1, rotation:2, ease:"back.out(1.6)", duration:0.35})
-    .fromTo("#ch2 .pist-bit", {scale:0, rotation:-90, y:-60},
-            {scale:1, rotation:20, y:0, stagger:0.05, ease:"back.out(3)", duration:0.25}, ">-0.15")
-    .fromTo("#ch2 .chapter-copy > *", {opacity:0, y:44},
-            {opacity:1, y:0, stagger:0.05, duration:0.3, ease:"power3.out"}, 0.15)
-    .to("#ch2 .big-num", {xPercent:18, duration:1}, 0);
-})();
-
-/* ---------- CH3: the split ---------- */
-(function(){
-  if (prefersReduced) return;
-  var tl = gsap.timeline({
-    scrollTrigger: { trigger: "#ch3", start: "top top", end: "+=120%", pin: true, scrub: true }
-  });
-  tl.fromTo("#pane-left", {xPercent:-100}, {xPercent:0, ease:"power2.out", duration:0.35})
-    .fromTo("#pane-right", {xPercent:100}, {xPercent:0, ease:"power2.out", duration:0.35}, "<")
-    .fromTo("#split-seam", {scaleY:0}, {scaleY:1, transformOrigin:"top", duration:0.25}, ">-0.1")
-    .fromTo("#ch3 .chapter-copy > *:not(#frame3)", {opacity:0, y:50},
-            {opacity:1, y:0, stagger:0.06, duration:0.32, ease:"power3.out"}, ">-0.1")
-    .fromTo("#frame3", {scale:0.5, rotation:-10, opacity:0},
-            {scale:1, rotation:-2, opacity:1, ease:"back.out(1.8)", duration:0.3}, "<+0.05")
-    .to("#ch3 .big-num", {yPercent:-14, duration:1}, 0);
-})();
-
-/* ---------- SCHEDULE: horizontal pinned run ---------- */
-(function(){
+  var scroller = document.getElementById("route-scroller");
   var track = document.getElementById("route-track");
   var stage = document.getElementById("route-stage");
-  if (prefersReduced){
-    stage.style.overflowX = "auto";
-    return;
+  var userEngaged = false, timer = null, inView = false;
+
+  function step(){
+    var card = track.querySelector(".stop-card");
+    var styles = getComputedStyle(track);
+    var gap = parseFloat(styles.columnGap || styles.gap) || 24;
+    return card ? card.getBoundingClientRect().width + gap : 320;
   }
-  var horiz = gsap.to(track, {
-    x: function(){ return -(track.scrollWidth - window.innerWidth); },
-    ease: "none",
-    scrollTrigger: {
-      trigger: stage, start: "top top", pin: true, scrub: true,
-      end: function(){ return "+=" + (track.scrollWidth - window.innerWidth); },
-      invalidateOnRefresh: true
+  function go(dir){
+    var max = scroller.scrollWidth - scroller.clientWidth;
+    if (dir > 0 && scroller.scrollLeft >= max - 8){
+      scroller.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      scroller.scrollBy({ left: dir * step(), behavior: "smooth" });
     }
+  }
+  function engage(){ userEngaged = true; stopAuto(); }
+  function stopAuto(){ if (timer){ clearInterval(timer); timer = null; } }
+  function maybeStart(){
+    if (prefersReduced || userEngaged || timer || !inView) return;
+    timer = setInterval(function(){ go(1); }, 4200);
+  }
+
+  document.getElementById("route-prev").addEventListener("click", function(){ engage(); go(-1); });
+  document.getElementById("route-next").addEventListener("click", function(){ engage(); go(1); });
+  ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function(ev){
+    scroller.addEventListener(ev, engage, { passive: true });
   });
-  gsap.utils.toArray(".stop-card").forEach(function(card, i){
-    gsap.from(card, {
-      y: 60, opacity: 0, ease: "power2.out",
-      scrollTrigger: {
-        trigger: card, containerAnimation: horiz,
-        start: "left 95%", end: "left 65%", scrub: true
-      }
+
+  if ("IntersectionObserver" in window){
+    new IntersectionObserver(function(entries){
+      inView = entries[0].isIntersecting;
+      if (inView) maybeStart(); else stopAuto();
+    }, { threshold: 0.35 }).observe(stage);
+  } else {
+    inView = true; maybeStart();
+  }
+
+  /* desktop mouse drag-to-scroll */
+  var dragging = false, startX = 0, startLeft = 0;
+  scroller.addEventListener("pointerdown", function(e){
+    if (e.pointerType !== "mouse") return;
+    dragging = true; startX = e.clientX; startLeft = scroller.scrollLeft;
+    scroller.classList.add("dragging");
+  });
+  window.addEventListener("pointermove", function(e){
+    if (!dragging) return;
+    scroller.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  window.addEventListener("pointerup", function(){
+    if (!dragging) return;
+    dragging = false; scroller.classList.remove("dragging");
+  });
+
+  /* cards pop in once when the section arrives */
+  if (!prefersReduced){
+    gsap.from(".stop-card", {
+      y: 60, opacity: 0, stagger: 0.09, duration: 0.7, ease: "power3.out",
+      scrollTrigger: { trigger: stage, start: "top 78%" }
     });
-  });
+  }
 })();
 
 /* ============================================================
